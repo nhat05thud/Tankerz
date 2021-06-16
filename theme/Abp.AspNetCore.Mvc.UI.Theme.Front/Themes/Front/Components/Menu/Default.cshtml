@@ -1,0 +1,51 @@
+﻿@using Volo.Abp.UI.Navigation
+@model ApplicationMenu
+
+
+@foreach (var menuItem in Model.Items)
+{
+    var elementId = string.IsNullOrEmpty(menuItem.ElementId) ? string.Empty : $"id=\"{menuItem.ElementId}\"";
+    var cssClass = string.IsNullOrEmpty(menuItem.CssClass) ? string.Empty : menuItem.CssClass;
+    var disabled = menuItem.IsDisabled ? "disabled" : string.Empty;
+    var url = string.IsNullOrEmpty(menuItem.Url) ? "#" : Url.Content(menuItem.Url);
+    if (menuItem.IsLeaf)
+    {
+        if (menuItem.Url != null)
+        {
+            <li class="nav-item @cssClass @disabled" @elementId>
+                <a class="js-nav-tooltip-link nav-link" target="@menuItem.Target" href="@url" data-placement="left" data-original-title="@menuItem.DisplayName">
+                    @if (menuItem.Icon != null)
+                    {
+                        if (menuItem.Icon.StartsWith("fa"))
+                        {
+                            <i class="@menuItem.Icon nav-icon"></i>
+                        }
+                    }
+                    <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">@menuItem.DisplayName</span>
+                </a>
+            </li>
+        }
+    }
+    else
+    {
+        <li class="navbar-vertical-aside-has-menu">
+            <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:;" title="Dashboards">
+                @if (menuItem.Icon != null)
+                {
+                    if (menuItem.Icon.StartsWith("fa"))
+                    {
+                        <i class="@menuItem.Icon nav-icon"></i>
+                    }
+                }
+                <span class="navbar-vertical-aside-mini-mode-hidden-elements text-truncate">@menuItem.DisplayName</span>
+            </a>
+
+            <ul class="js-navbar-vertical-aside-submenu nav nav-sub">
+                @foreach (var childMenuItem in menuItem.Items)
+                {
+                    @await Html.PartialAsync("~/Themes/Front/Components/Menu/_MenuItem.cshtml", childMenuItem)
+                }
+            </ul>
+        </li>
+    }
+}

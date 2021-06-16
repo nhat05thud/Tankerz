@@ -1,0 +1,48 @@
+﻿@using Volo.Abp.UI.Navigation
+@model ApplicationMenuItem
+@{
+    var elementId = string.IsNullOrEmpty(Model.ElementId) ? string.Empty : $"id=\"{Model.ElementId}\"";
+    var cssClass = string.IsNullOrEmpty(Model.CssClass) ? string.Empty : Model.CssClass;
+    var disabled = Model.IsDisabled ? "disabled" : string.Empty;
+    var url = string.IsNullOrEmpty(Model.Url) ? "#" : Url.Content(Model.Url);
+}
+@if (Model.IsLeaf)
+{
+    if (Model.Url != null)
+    {
+        <li class="nav-item @cssClass @disabled" @elementId>
+            <a class="js-nav-tooltip-link nav-link" target="@Model.Target" data-placement="right" data-original-title="@Model.DisplayName" href="@url">
+                @if (Model.Icon != null)
+                {
+                    if (Model.Icon.StartsWith("fa"))
+                    {
+                        <i class="@Model.Icon nav-icon"></i>
+                    }
+                }
+                <span class="text-truncate">@Model.DisplayName</span>
+            </a>
+        </li>
+    }
+}
+else
+{
+    <li class="navbar-vertical-aside-has-menu">
+        <a class="js-navbar-vertical-aside-menu-link nav-link nav-link-toggle" href="javascript:;" title="Dashboards">
+            @if (Model.Icon != null)
+            {
+                if (Model.Icon.StartsWith("fa"))
+                {
+                    <i class="@Model.Icon nav-icon"></i>
+                }
+            }
+            <span class="text-truncate">@Model.DisplayName</span>
+        </a>
+
+        <ul class="js-navbar-vertical-aside-submenu nav nav-sub">
+            @foreach (var childMenuItem in Model.Items)
+            {
+                @await Html.PartialAsync("~/Themes/Front/Components/Menu/_MenuItem.cshtml", childMenuItem)
+            }
+        </ul>
+    </li>
+}

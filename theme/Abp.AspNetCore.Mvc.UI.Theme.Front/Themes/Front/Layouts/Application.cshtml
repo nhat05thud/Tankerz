@@ -1,0 +1,78 @@
+﻿@using Volo.Abp.AspNetCore.Mvc.UI.Components.LayoutHook
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Abp.AspNetCore.Mvc.UI.Theme.Front.Bundling
+@using Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.MainNavbar
+@using Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.PageAlerts
+@using Volo.Abp.AspNetCore.Mvc.AntiForgery
+@using Volo.Abp.AspNetCore.Mvc.UI.Theming
+@using Volo.Abp.AspNetCore.Mvc.UI.Widgets.Components.WidgetScripts
+@using Volo.Abp.AspNetCore.Mvc.UI.Widgets.Components.WidgetStyles
+@using Volo.Abp.Localization
+@using Volo.Abp.Ui.Branding
+@inject IAbpAntiForgeryManager AbpAntiForgeryManager
+@inject IBrandingProvider BrandingProvider
+@inject IPageLayout PageLayout
+@{
+    Layout = null;
+    AbpAntiForgeryManager.SetCookie();
+
+    var pageTitle = ViewBag.Title == null ? BrandingProvider.AppName : ViewBag.Title; //TODO: Discard to get from Title
+    if (PageLayout.Content.Title != null)
+    {
+        if (!string.IsNullOrWhiteSpace(pageTitle))
+        {
+            pageTitle = " | " + pageTitle;
+        }
+
+        pageTitle = PageLayout.Content.Title + pageTitle;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentCulture.Name">
+<head>
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.First, StandardLayouts.Application)
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="favicon.ico">
+    <title>@pageTitle</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
+    <abp-style-bundle name="@FrontThemeBundles.Styles.Global" />
+    <link rel="stylesheet" href="/assets/css/vendor.min.css">
+    <link rel="stylesheet" href="/assets/vendor/icon-set/style.css">
+    <link rel="stylesheet" href="/assets/css/theme.minc619.css">
+    @await Component.InvokeAsync(typeof(WidgetStylesViewComponent))
+    @await RenderSectionAsync("styles", false)
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Application)
+</head>
+
+<body class="footer-offset footer-offset has-navbar-vertical-aside navbar-vertical-aside-show-xl navbar-vertical-aside-mini-mode">
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.First, StandardLayouts.Application)
+    @(await Component.InvokeAsync<MainNavbarViewComponent>())
+    <main id="content" role="main" class="main pointer-event">
+        <div class="content container-fluid">
+            @(await Component.InvokeAsync<PageAlertsViewComponent>())
+            <div id="AbpContentToolbar">
+                <div class="text-right mb-2">
+                    @RenderSection("content_toolbar", false)
+                </div>
+            </div>
+            @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Application)
+            @RenderBody()
+            @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Application)
+        </div>
+        <partial name="~/Themes/Front/Layouts/Partials/_Footer.cshtml" />
+    </main>
+    <abp-script-bundle name="@FrontThemeBundles.Scripts.Global" />
+    <!-- JS Front -->
+    <script src="/assets/js/vendor.min.js"></script>
+    <script src="/assets/js/theme.min.js"></script>
+    <script src="/assets/js/custom-script.js"></script>
+
+    <script src="~/Abp/ApplicationConfigurationScript"></script>
+    <script src="~/Abp/ServiceProxyScript"></script>
+    @await Component.InvokeAsync(typeof(WidgetScriptsViewComponent))
+    @await RenderSectionAsync("scripts", false)
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Application)
+</body>
+</html>

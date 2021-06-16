@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<Import Project="..\..\common.props" />
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<ApplicationIcon />
+		<OutputType>Library</OutputType>
+		<StartupObject />
+		<AssemblyName>Abp.AspNetCore.Mvc.UI.Theme.Front</AssemblyName>
+		<Authors>Nhat05</Authors>
+		<Description>An ABP theme module based on Front</Description>
+		<PackageProjectUrl>#</PackageProjectUrl>
+		<PackageTags>Abp module theme</PackageTags>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IsPackable>true</IsPackable>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+		</None>
+		<None Include="Pages\Identity\Roles\Index.cshtml" />
+		<None Include="Pages\Identity\Users\Index.cshtml" />
+		<None Include="Pages\TenantManagement\Tenants\Index.cshtml" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Localization\**\*.json" />
+		<EmbeddedResource Include="wwwroot\**\*" />
+		<Content Remove="wwwroot\**\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="4.3.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy" Version="4.3.0" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared" Version="4.3.0" />
+		<PackageReference Include="Volo.Abp.Identity.Web" Version="4.3.0" />
+		<PackageReference Include="Volo.Abp.TenantManagement.Web" Version="4.3.0" />
+	</ItemGroup>
+
+</Project>

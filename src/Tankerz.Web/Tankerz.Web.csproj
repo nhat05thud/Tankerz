@@ -1,0 +1,124 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Tankerz.Web</RootNamespace>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>Tankerz-4681b4fd-151f-4221-84a4-929d86723e4c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Logs\**" />
+    <Content Remove="Logs\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <None Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\brands\atlassian.svg" />
+    <None Include="wwwroot\assets\brands\bank-of-america.svg" />
+    <None Include="wwwroot\assets\brands\bookingcom.svg" />
+    <None Include="wwwroot\assets\brands\capsule.svg" />
+    <None Include="wwwroot\assets\brands\chrome.svg" />
+    <None Include="wwwroot\assets\brands\digitalocean.svg" />
+    <None Include="wwwroot\assets\brands\excel.svg" />
+    <None Include="wwwroot\assets\brands\figma.svg" />
+    <None Include="wwwroot\assets\brands\fitbit-gray.svg" />
+    <None Include="wwwroot\assets\brands\flow-xo-gray.svg" />
+    <None Include="wwwroot\assets\brands\frontapp.svg" />
+    <None Include="wwwroot\assets\brands\gitlab-gray.svg" />
+    <None Include="wwwroot\assets\brands\gmail.svg" />
+    <None Include="wwwroot\assets\brands\google-docs.svg" />
+    <None Include="wwwroot\assets\brands\google-sheets.svg" />
+    <None Include="wwwroot\assets\brands\google-slides.svg" />
+    <None Include="wwwroot\assets\brands\google-webdev.svg" />
+    <None Include="wwwroot\assets\brands\google.svg" />
+    <None Include="wwwroot\assets\brands\guideline.svg" />
+    <None Include="wwwroot\assets\brands\htmlstream.svg" />
+    <None Include="wwwroot\assets\brands\jira.svg" />
+    <None Include="wwwroot\assets\brands\layar-gray.svg" />
+    <None Include="wwwroot\assets\brands\mailchimp.svg" />
+    <None Include="wwwroot\assets\brands\mastercard.svg" />
+    <None Include="wwwroot\assets\brands\paypal-icon.svg" />
+    <None Include="wwwroot\assets\brands\pdf.svg" />
+    <None Include="wwwroot\assets\brands\prosperops.svg" />
+    <None Include="wwwroot\assets\brands\slack.svg" />
+    <None Include="wwwroot\assets\brands\spec.svg" />
+    <None Include="wwwroot\assets\brands\spotify.svg" />
+    <None Include="wwwroot\assets\brands\visa.svg" />
+    <None Include="wwwroot\assets\brands\word.svg" />
+    <None Include="wwwroot\assets\components\abstract-bg-4.svg" />
+    <None Include="wwwroot\assets\components\placeholder-csv-format.svg" />
+    <None Include="wwwroot\assets\components\placeholder-img-format.svg" />
+    <None Include="wwwroot\assets\components\placeholder-lg.svg" />
+    <None Include="wwwroot\assets\components\popover-bottom.svg" />
+    <None Include="wwwroot\assets\components\popover-left.svg" />
+    <None Include="wwwroot\assets\components\popover-right.svg" />
+    <None Include="wwwroot\assets\components\popover-top.svg" />
+    <None Include="wwwroot\assets\components\star-half.svg" />
+    <None Include="wwwroot\assets\components\star-muted.svg" />
+    <None Include="wwwroot\assets\components\star.svg" />
+    <None Include="wwwroot\assets\layouts\content-combinations-container-overlay.svg" />
+    <None Include="wwwroot\assets\layouts\content-combinations-content-centered.svg" />
+    <None Include="wwwroot\assets\layouts\content-combinations-overlay.svg" />
+    <None Include="wwwroot\assets\layouts\demo-layouts-default-classic.svg" />
+    <None Include="wwwroot\assets\layouts\footer-default-container.svg" />
+    <None Include="wwwroot\assets\layouts\footer-default-fluid.svg" />
+    <None Include="wwwroot\assets\layouts\header-default-container.svg" />
+    <None Include="wwwroot\assets\layouts\header-default-fluid.svg" />
+    <None Include="wwwroot\assets\layouts\header-double-line-container.svg" />
+    <None Include="wwwroot\assets\layouts\header-double-line-fluid.svg" />
+    <None Include="wwwroot\assets\layouts\layouts-sidebar-dark.svg" />
+    <None Include="wwwroot\assets\layouts\layouts-sidebar-default.svg" />
+    <None Include="wwwroot\assets\layouts\layouts-sidebar-light.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-combinations-mini-plus-one-cols.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-combinations-two-cols-between.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-combinations-two-cols.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-combinations-two-plus-mini-cols.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-compact.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-default-classic.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-detached-container.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-detached-fluid.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-detached-overlay-container.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-detached-overlay-fluid.svg" />
+    <None Include="wwwroot\assets\layouts\sidebar-mini.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Pages\**\*.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Pages\**\*.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\theme\Abp.AspNetCore.Mvc.UI.Theme.Front\Abp.AspNetCore.Mvc.UI.Theme.Front.csproj" />
+    <ProjectReference Include="..\Tankerz.Application\Tankerz.Application.csproj" />
+    <ProjectReference Include="..\Tankerz.HttpApi\Tankerz.HttpApi.csproj" />
+    <ProjectReference Include="..\Tankerz.EntityFrameworkCore.DbMigrations\Tankerz.EntityFrameworkCore.DbMigrations.csproj" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Swashbuckle" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Authentication.JwtBearer" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Serilog" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Identity.Web" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.Account.Web.IdentityServer" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="4.3.2" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="4.3.2" />
+  </ItemGroup>
+
+</Project>

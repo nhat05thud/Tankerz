@@ -1,0 +1,76 @@
+﻿@using Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Brand
+@using Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Menu
+@using Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Toolbar
+@*<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm flex-column flex-md-row mb-4" id="main-navbar" style="min-height: 4rem;">
+    <div class="container">
+        @(await Component.InvokeAsync<MainNavbarBrandViewComponent>())
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#main-navbar-collapse" aria-controls="main-navbar-collapse"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="main-navbar-collapse">
+            <ul class="navbar-nav mx-auto">
+                @(await Component.InvokeAsync<MainNavbarMenuViewComponent>())
+            </ul>
+            <ul class="navbar-nav">
+                @(await Component.InvokeAsync<MainNavbarToolbarViewComponent>())
+            </ul>
+        </div>
+    </div>
+</nav>*@
+
+<header id="header" class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-flush navbar-container navbar-bordered">
+    <div class="navbar-nav-wrap">
+        <div class="navbar-nav-wrap-content-left">
+            <button type="button" class="js-navbar-vertical-aside-toggle-invoker close mr-3">
+                <i class="tio-first-page navbar-vertical-aside-toggle-short-align" data-toggle="tooltip" data-placement="right" title="Collapse"></i>
+                <i class="tio-last-page navbar-vertical-aside-toggle-full-align" data-template='<div class="tooltip d-none d-sm-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-toggle="tooltip" data-placement="right" title="Expand"></i>
+            </button>
+            <div class="d-none d-md-block">
+                <form class="position-relative">
+                    <div class="input-group input-group-merge input-group-borderless input-group-hover-light navbar-input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <i class="tio-search"></i>
+                            </div>
+                        </div>
+                        <input type="search" class="form-control" placeholder="Search in front" aria-label="Search in front">
+                        <a class="input-group-append" href="javascript:;">
+                            <span class="input-group-text">
+                                <i id="clearSearchResultsIcon" class="tio-clear" style="display: none;"></i>
+                            </span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="navbar-nav-wrap-content-right">
+            <ul class="navbar-nav align-items-center flex-row">
+                @(await Component.InvokeAsync<MainNavbarToolbarViewComponent>())
+            </ul>
+            <!-- End Navbar -->
+        </div>
+        <!-- End Secondary Content -->
+    </div>
+</header>
+<aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered navbar-dark navbar-vertical-aside-initialized">
+    <div class="navbar-vertical-container">
+        <div class="navbar-vertical-footer-offset">
+            <div class="navbar-brand-wrapper justify-content-between">
+                <a class="navbar-brand" href="/" aria-label="Front">
+                    <img class="navbar-brand-logo" src="/assets/svg/logos/logo-white.svg" alt="Logo">
+                    <img class="navbar-brand-logo-mini" src="/assets/svg/logos/logo-short-white.svg" alt="Logo">
+                </a>
+                <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-vertical-aside-toggle btn btn-icon btn-xs btn-ghost-dark">
+                    <i class="tio-clear tio-lg"></i>
+                </button>
+            </div>
+            <div class="navbar-vertical-content">
+                <ul class="navbar-nav navbar-nav-lg nav-tabs">
+                    @(await Component.InvokeAsync<MainNavbarMenuViewComponent>())
+                </ul>
+            </div>
+        </div>
+    </div>
+</aside>
