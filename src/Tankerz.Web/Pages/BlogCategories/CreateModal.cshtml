@@ -1,0 +1,95 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Web.Pages.BlogCategories
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IStringLocalizer<TankerzResource> L
+@{
+    Layout = null;
+}
+<form asp-page="/BlogCategories/CreateModal" onkeydown="return event.key != 'Enter';">
+    <abp-modal centered="true" scrollable="true" size="ExtraLarge" id="myModal">
+        <abp-modal-header class="text-uppercase" title="Thêm mới danh mục tin tức"></abp-modal-header>
+        <abp-modal-body class="custom-modal-body">
+            <!-- Nav -->
+            <div class="text-left">
+                <ul class="nav nav-segment nav-pills mb-2" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-one-eg1-tab" data-toggle="pill" href="#nav-one-eg1" role="tab" aria-controls="nav-one-eg1" aria-selected="true">Thông tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-two-eg1-tab" data-toggle="pill" href="#nav-two-eg1" role="tab" aria-controls="nav-two-eg1" aria-selected="false">SEO</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-one-eg1" role="tabpanel" aria-labelledby="nav-one-eg1-tab">
+                    <div class="row">
+                        <div class="col-custom-3">
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Hình đại diện</p>
+                                <div id="single-media-picker">
+                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Images" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Thuộc tính:</p>
+                                <abp-input asp-for="BlogCategory.IsPublish" label="Hiển thị" />
+                                <abp-input asp-for="BlogCategory.IsShowOnMenu" label="Show → Menu" />
+                                <abp-input asp-for="BlogCategory.IsShowOnHomePage" label="Show → Trang chủ" />
+                                <br />
+                                <abp-input asp-for="BlogCategory.Priority" label="Số thứ tự" />
+                            </div>
+                        </div>
+                        <div class="col-custom-9">
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Banner</p>
+                                <div id="multiple-media-picker">
+                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Banners" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring='"[{\"id\":\"b943e32d-ca1d-b067-a084-39fd7ce667fe\",\"name\":\"img1\",\"url\":\"/Media/data/img1.webp\",\"imageSmallUrl\":\"/Media/data/small/img1.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"36dfb70c-dcfb-6193-3727-39fd7ce66a5c\",\"name\":\"img3\",\"url\":\"/Media/data/img3.webp\",\"imageSmallUrl\":\"/Media/data/small/img3.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"a576b667-7741-02b8-d6a7-39fd7fc45b9e\",\"name\":\"img1\",\"url\":\"/Media/data/img1(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img1(1).webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"d4b43c5d-6e26-2a9f-07ef-39fd7fc45cc3\",\"name\":\"img2\",\"url\":\"/Media/data/img2(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img2(1).webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"bdc5621a-f5b3-0840-b0bc-39fd7fc45de1\",\"name\":\"img3\",\"url\":\"/Media/data/img3(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img3(1).webp\",\"extension\":\".webp\",\"checked\":true}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                            <div class="modal-custom-content">
+                                <abp-input asp-for="BlogCategory.Name" />
+                                <abp-input asp-for="BlogCategory.Description" />
+                                <abp-input asp-for="BlogCategory.Tags" />
+                            </div>
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Hình ảnh liên quan</p>
+                                <div id="multiple-media-picker-product">
+                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Images" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-two-eg1" role="tabpanel" aria-labelledby="nav-two-eg1-tab">
+                    <div class="modal-custom-content">
+                        <abp-input asp-for="BlogCategory.MetaTitle" />
+                        <abp-input asp-for="BlogCategory.MetaDescription" />
+                        <abp-input asp-for="BlogCategory.MetaKeyword" />
+                        <abp-input asp-for="BlogCategory.MetaTag" />
+                    </div>
+                    <div class="modal-custom-content">
+                        <p class="section-modal-title">Meta Thumbnail</p>
+                        <div id="meta-media-picker">
+                            <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.MetaThumbnail" />
+                            <file v-bind:ismultiple="false" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+    <abp-script src="/assets/js/mediapicker.js" />
+    <script>
+        CKEDITOR.replace('BlogCategory_Description', {
+            filebrowserBrowseUrl: '/MediaManagement',
+            customConfig: '/custom/ckeditor_config.js'
+        });
+    </script>
+</form>

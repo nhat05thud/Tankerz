@@ -38,15 +38,17 @@
     <title>@pageTitle</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&amp;display=swap" rel="stylesheet">
     <abp-style-bundle name="@FrontThemeBundles.Styles.Global" />
-    <link rel="stylesheet" href="/assets/css/vendor.min.css">
-    <link rel="stylesheet" href="/assets/vendor/icon-set/style.css">
-    <link rel="stylesheet" href="/assets/css/theme.minc619.css">
+    <abp-style src="/assets/css/vendor.min.css" />
+    <abp-style src="/assets/vendor/icon-set/style.css" />
+    <abp-style src="/assets/css/theme.minc619.css" />
+    <abp-style src="/assets/libs/fancybox/fancybox.css" />
+    <abp-style src="/assets/css/main-custom.css" />
     @await Component.InvokeAsync(typeof(WidgetStylesViewComponent))
     @await RenderSectionAsync("styles", false)
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Application)
 </head>
 
-<body class="footer-offset footer-offset has-navbar-vertical-aside navbar-vertical-aside-show-xl navbar-vertical-aside-mini-mode">
+<body class="footer-offset footer-offset has-navbar-vertical-aside navbar-vertical-aside-show-xl">
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.First, StandardLayouts.Application)
     @(await Component.InvokeAsync<MainNavbarViewComponent>())
     <main id="content" role="main" class="main pointer-event">
@@ -65,14 +67,190 @@
     </main>
     <abp-script-bundle name="@FrontThemeBundles.Scripts.Global" />
     <!-- JS Front -->
-    <script src="/assets/js/vendor.min.js"></script>
-    <script src="/assets/js/theme.min.js"></script>
-    <script src="/assets/js/custom-script.js"></script>
+    <abp-script src="/assets/js/vendor.min.js" />
+    <abp-script src="/assets/js/theme.min.js" />
+    <script src="/assets/libs/ckeditor/ckeditor.js"></script>
+    @*Media picker*@
+    <abp-script src="/assets/libs/vue/vue.js" />
+    <abp-script src="/assets/libs/fancybox/fancybox.umd.js" />
+    <abp-script src="/assets/libs/vue/vue-lazyload.js" />
+    @*Media picker*@
+    <abp-script src="/assets/js/custom-script.js" />
 
     <script src="~/Abp/ApplicationConfigurationScript"></script>
     <script src="~/Abp/ServiceProxyScript"></script>
     @await Component.InvokeAsync(typeof(WidgetScriptsViewComponent))
     @await RenderSectionAsync("scripts", false)
     @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Application)
+
+    @*template mediapicker*@
+    <script type="text/x-template" id="add-folder-template">
+        <transition name="add-folder-template">
+            <div class="add-folder-mask">
+                <div class="add-new-folder">
+                    <div class="text-center">
+                        <p style="color: red" v-if="isFailure"><i class="fas fa-times-circle"></i> <b>{{ folderName }}</b> đã tồn tại trong hệ thống, vui lòng thử lại với tên khác</p>
+                        <p style="color: green" v-if="isSuccessful"><i class="fas fa-times-circle"></i> Folder <b>{{ folderName }}</b> đã được tạo thành công</p>
+                    </div>
+                    <input type="text" placeholder="Folder Name..." v-on:keyup.enter="submit" v-on:input="onChange" v-model="folderName" :disabled="isSuccessful" value="" />
+                    <i class="fas fa-times" @@click="$emit('close')"></i>
+                </div>
+            </div>
+        </transition>
+    </script>
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+            <div class="media-modal-mask">
+                <div class="media-modal-wrapper">
+                    <div class="media-modal-container">
+                        <div class="media-modal-header">
+                            <h3>Media Management</h3>
+                            <i class="fas fa-times" @@click="$emit('close')"></i>
+                            <ul class="nav nav-tabs xtemplate-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link" @@click.prevent="setActive('media')" :class="{ active: isActive('media') }" href="#media">Media Library</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" @@click.prevent="setActive('upload')" :class="{ active: isActive('upload') }" href="#upload">Upload Files</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="media-modal-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade" :class="{ 'active show': isActive('media') }" id="media">
+                                    <add-folder v-if="showAddModal" @@close="showAddModal = false" v-on:reload_data="loadFolderData"></add-folder>
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <div id="media-search">
+                                                <input type="text" v-model="searchQuery" placeholder="Search" class="form-control" value="" />
+                                                <i class="fas fa-search"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div id="media-folder">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-light dropdown-toggle text-left" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                {{ currentFolder.name != null ? currentFolder.name : "(Chưa có folder)" }}
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                <a v-for="(item, index) in lstFolders" class="dropdown-item" @@click="changeFolder(item)"><i class="fas fa-folder"></i>{{ item.name }}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <button class="btn btn-secondary" @@click="showAddModal = true" type="button"><i class="fas fa-plus"></i> Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p v-if="lstFolders.length <= 0" class="text-center" style="color: red">{{ statusText }}</p>
+                                    <div id="media-loading-mask" v-if="isLoading"><div class="lds-ripple"><div></div><div></div></div></div>
+                                    <div v-if="isLoading == false" id="content-management__media">
+                                        <div v-for="(obj, index) in resultQuery" class="item">
+                                            <label class="img-wrapper" :class="{ 'active' : obj.checked }">
+                                                <img v-lazy="obj.imageSmallUrl" :alt="obj.name" />
+                                                <input v-if="isMultiple" type="checkbox" name="ChoosenImage" :value="obj.url" :checked="obj.checked" @@click="toggleActive($event, obj)" />
+                                                <input v-if="!isMultiple" type="radio" name="ChoosenImage" :value="obj.url" :checked="obj.checked" @@click="toggleActive($event, obj)" />
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <p :title="obj.name">{{obj.name}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" :class="{ 'active show': isActive('upload') }" id="upload">
+                                    <upload-file :currentFolder="currentFolder" v-on:reload_data="loadData"></upload-file>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-modal-footer">
+                            <button v-if="isActive('media')" type="button" class="btn btn-success modal-default-button" @@click="sendDataToParent">
+                                Chọn
+                            </button>
+                            <button type="button" class="btn btn-secondary modal-default-button" @@click="$emit('close')">
+                                Đóng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+    <script type="text/x-template" id="upload-file-template">
+        <transition name="upload-file">
+            <div class="upload-file-section" v-if="folderId > 0">
+                <div class="text-left">
+                    <label id="upload-input">
+                        <a class="btn btn-info" style="cursor: pointer;"><i class="fas fa-clone"></i> Choose Files</a>
+                        <input type="file" name="files" id="select-files" @@change="onChange($event)" value="" style="display: none;" multiple />
+                    </label>
+                    <button type="button" v-if="lstFiles.length > 0 && isEnableUpload" class="btn btn-success" style="cursor: pointer;" @@click="sendToServer"><i class="fas fa-upload"></i> Upload</button>
+                </div>
+                <div v-if="isProgress && lstFiles.length > 0" class="wrapper-progress">
+                    <h5>Uploading...</h5>
+                    <div class="progress upload-progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                             role="progressbar"
+                             aria-valuenow="100"
+                             aria-valuemin="0"
+                             aria-valuemax="100"
+                             style="width: 100%"></div>
+                    </div>
+                </div>
+                <div class="text-center" v-if="isSuccessful && lstFiles.length == 0" style="color: green;">
+                    <i class="fas fa-check-circle"></i> Upload thành công
+                </div>
+                <div class="text-center" v-if="isFailure && lstFiles.length == 0" style="color: red;">
+                    <i class="fas fa-times-circle"></i> Upload Thất bại
+                </div>
+                <div class="text-center" v-if="isNotImageType" style="color: red;">
+                    <i class="fas fa-times-circle"></i> Chỉ chọn định dạng image (*.png, *.jpg, *.jpeg, *.webp)
+                </div>
+                <div v-if="lstFiles.length > 0" id="filelist">
+                    <div v-for="(file, index) in lstFiles" class="item">
+                        <a data-fancybox="image-gallery" :data-src="file.url">
+                            <img :src="file.url" :alt="file.name" />
+                        </a>
+                        <div class="content">
+                            <div>
+                                <span>Name:</span>
+                                <div class="li-content">
+                                    <p v-show="!file.edit" v-on:click="toggleEdit(file)">{{ file.name }}</p>
+                                    <input type="text" ref="input" v-show="file.edit" v-on:blur="saveEdit(file)" v-model="file.name" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div>
+                                <span>Extension:</span>
+                                <div class="li-content">
+                                    <p>{{ file.extension }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <i class="fas fa-times" @@click="removeFileUpload(index)"></i>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+    <script type="text/x-template" id="file-template">
+        <transition name="file-template">
+            <div class="media-picker">
+                <div v-for="(obj, index) in items" class="item">
+                    <a data-fancybox="image-gallery-view" :data-src="obj.url">
+                        <img :src="obj.imageSmallUrl" :alt="obj.name" :id="obj.id" />
+                    </a>
+                    <i class="fas fa-times" @@click="removeImage(index)"></i>
+                </div>
+                <div v-if="items.length <= 0" class="item-modal">
+                    <label @@click="showModal = true">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </label>
+                </div>
+                <modal v-if="showModal" @@close="showModal = false" v-bind:items="items" v-bind:ismulti="isMulti" v-on:pass_data_to_parent="passDataToParent"></modal>
+            </div>
+        </transition>
+    </script>
 </body>
 </html>
