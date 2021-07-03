@@ -1,0 +1,33 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Permissions
+@using Tankerz.Web.Pages.BlogCategories
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<TankerzResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+
+@section scripts
+{
+    <abp-script src="/Pages/BlogCategories/Index.js" />
+}
+
+<abp-card class="custom-card">
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["BlogCategories"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                <abp-button id="NewBlogCategoryButton"
+                            text="@L["NewBlogCategory"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="false" id="BlogCategoriesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

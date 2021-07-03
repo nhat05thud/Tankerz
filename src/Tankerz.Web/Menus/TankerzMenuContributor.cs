@@ -33,7 +33,17 @@ namespace Tankerz.Web.Menus
                     order: 0
                 )
             );
-            
+            context.Menu.Items.Insert(
+                1,
+                new ApplicationMenuItem(
+                    TankerzMenus.BlogCategory,
+                    l["Menu:BlogCategory"],
+                    "~/BlogCategories",
+                    icon: "fas fa-newspaper",
+                    order: 0
+                )
+            );
+
             if (MultiTenancyConsts.IsEnabled)
             {
                 administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);

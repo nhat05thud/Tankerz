@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Tankerz.BlogCategories;
+using static Tankerz.Web.Pages.BlogCategories.CreateModalModel;
 
 namespace Tankerz.Web
 {
@@ -7,6 +9,7 @@ namespace Tankerz.Web
         public TankerzWebAutoMapperProfile()
         {
             //Define your AutoMapper configuration here for the Web project.
+            CreateMap<CreateBlogCategoryViewModel, CreateUpdateBlogCategoryDto>();
         }
     }
 }
