@@ -1,4 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tankerz.TankerzEntities.BlogCategories;
+using Tankerz.TankerzEntities.Blogs;
+using Tankerz.TankerzEntities.ProductAttributes;
+using Tankerz.TankerzEntities.ProductCategories;
+using Tankerz.TankerzEntities.ProductGroups;
+using Tankerz.TankerzEntities.Products;
+using Tankerz.TankerzEntities.TankerzFiles;
+using Tankerz.TankerzEntities.TankerzFolders;
+using Tankerz.TankerzEntities.TankerzPages;
 using Tankerz.Users;
 using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
@@ -21,6 +30,15 @@ namespace Tankerz.EntityFrameworkCore
     public class TankerzDbContext : AbpDbContext<TankerzDbContext>
     {
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogCategory> BlogCategories { get; set; }
+        //public DbSet<Product> Products { get; set; }
+        //public DbSet<ProductCategory> ProductCategories { get; set; }
+        //public DbSet<ProductGroup> ProductGroups { get; set; }
+        //public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<TankerzFile> TankerzFiles { get; set; }
+        public DbSet<TankerzFolder> TankerzFolders { get; set; }
+        public DbSet<TankerzPage> TankerzPages { get; set; }
 
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside TankerzDbContextModelCreatingExtensions.ConfigureTankerz
