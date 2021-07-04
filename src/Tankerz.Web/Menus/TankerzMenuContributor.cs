@@ -36,6 +36,16 @@ namespace Tankerz.Web.Menus
             context.Menu.Items.Insert(
                 1,
                 new ApplicationMenuItem(
+                    TankerzMenus.Blog,
+                    l["Menu:Blog"],
+                    "~/Blogs",
+                    icon: "fas fa-newspaper",
+                    order: 0
+                )
+            );
+            context.Menu.Items.Insert(
+                1,
+                new ApplicationMenuItem(
                     TankerzMenus.BlogCategory,
                     l["Menu:BlogCategory"],
                     "~/BlogCategories",

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Tankerz.BlogCategories;
+using Tankerz.Blogs;
 using Tankerz.TankerzEntities.BlogCategories;
+using Tankerz.TankerzEntities.Blogs;
 
 namespace Tankerz
 {
@@ -14,6 +16,12 @@ namespace Tankerz
 
             CreateMap<BlogCategory, BlogCategoryDto>();
             CreateMap<CreateUpdateBlogCategoryDto, BlogCategory>();
+
+            CreateMap<Blog, BlogDto>();
+            CreateMap<CreateUpdateBlogDto, Blog>();
+            CreateMap<BlogCategory, BlogCategoryLookupDto>();
+
+
 
         }
     }

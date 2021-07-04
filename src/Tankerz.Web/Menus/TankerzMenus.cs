@@ -7,6 +7,7 @@
 
         //Add your menu items here...
         public const string BlogCategory = Prefix + ".BlogCategory";
+        public const string Blog = Prefix + ".Blog";
 
     }
 }
