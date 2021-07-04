@@ -36,6 +36,10 @@ namespace Tankerz.Web.Pages.BlogCategories
 
         public class CreateBlogCategoryViewModel
         {
+            public CreateBlogCategoryViewModel()
+            {
+                IsPublish = true;
+            }
             public string Banners { get; set; }
             public string Images { get; set; }
             [Required]
@@ -43,7 +47,6 @@ namespace Tankerz.Web.Pages.BlogCategories
             public string Name { get; set; }
             [TextArea]
             public string Description { get; set; }
-            public string Tags { get; set; }
             public int Priority { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }

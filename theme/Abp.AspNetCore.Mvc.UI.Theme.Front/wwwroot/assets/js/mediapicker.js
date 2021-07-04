@@ -13,17 +13,21 @@
     },
     template: "#file-template",
     mounted: function () {
-        this.items = JSON.parse(this.jsonPostString);
+        if (this.jsonPostString != "") {
+            this.items = JSON.parse(this.jsonPostString);
+        }
         this.$emit('pass_data_to_parent', this.jsonPostString);
     },
     methods: {
         passDataToParent(data) {
             this.items = data;
-            this.jsonPostString = JSON.stringify(data);
-            this.$emit('pass_data_to_parent', data);
+            this.jsonPostString = data;
+            this.$emit('pass_data_to_parent', JSON.stringify(data));
         },
         removeImage(index) {
             Vue.delete(this.items, index);
+            var data = this.items;
+            this.$emit('pass_data_to_parent', JSON.stringify(data));
         }
     }
 })
@@ -344,48 +348,63 @@ Vue.use(VueLazyload, {
     attempt: 1
 });
 // vue lazy loading
-
-new Vue({
-    el: "#single-media-picker",
-    data: {
-        jsonPostString: ""
-    },
-    methods: {
-        passDataToParent(data) {
-            this.jsonPostString = JSON.stringify(data);
+if ($("#single-media-picker").length > 0) {
+    new Vue({
+        el: "#single-media-picker",
+        data: {
+            jsonPostString: ""
         },
-    }
-});
-new Vue({
-    el: "#meta-media-picker",
-    data: {
-        jsonPostString: ""
-    },
-    methods: {
-        passDataToParent(data) {
-            this.jsonPostString = JSON.stringify(data);
+        methods: {
+            passDataToParent(data) {
+                if (data != "") {
+                    this.jsonPostString = JSON.stringify(JSON.parse(data));
+                }
+            },
+        }
+    });
+}
+if ($("#meta-media-picker").length > 0) {
+    new Vue({
+        el: "#meta-media-picker",
+        data: {
+            jsonPostString: ""
         },
-    }
-});
-new Vue({
-    el: "#multiple-media-picker",
-    data: {
-        jsonPostString: ""
-    },
-    methods: {
-        passDataToParent(data) {
-            this.jsonPostString = JSON.stringify(data);
+        methods: {
+            passDataToParent(data) {
+                if (data != "") {
+                    this.jsonPostString = JSON.stringify(JSON.parse(data));
+                }
+            },
+        }
+    });
+}
+if ($("#multiple-media-picker").length > 0) {
+    new Vue({
+        el: "#multiple-media-picker",
+        data: {
+            jsonPostString: ""
         },
-    }
-});
-new Vue({
-    el: "#multiple-media-picker-product",
-    data: {
-        jsonPostString: ""
-    },
-    methods: {
-        passDataToParent(data) {
-            this.jsonPostString = JSON.stringify(data);
+        methods: {
+            passDataToParent(data) {
+                if (data != "") {
+                    this.jsonPostString = JSON.stringify(JSON.parse(data));
+                }
+            },
+        }
+    });
+}
+if ($("#multiple-media-picker-product").length > 0) {
+    new Vue({
+        el: "#multiple-media-picker-product",
+        data: {
+            jsonPostString: ""
         },
-    }
-});
+        methods: {
+            passDataToParent(data) {
+                if (data != "") {
+                    this.jsonPostString = JSON.stringify(JSON.parse(data));
+                }
+            },
+        }
+    });
+}

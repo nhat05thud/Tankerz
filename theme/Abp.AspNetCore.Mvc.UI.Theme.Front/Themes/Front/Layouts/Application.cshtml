@@ -243,7 +243,7 @@
                     </a>
                     <i class="fas fa-times" @@click="removeImage(index)"></i>
                 </div>
-                <div v-if="items.length <= 0" class="item-modal">
+                <div class="item-modal" v-if="items.length <= 0 || isMulti == true">
                     <label @@click="showModal = true">
                         <i class="fas fa-plus" aria-hidden="true"></i>
                     </label>

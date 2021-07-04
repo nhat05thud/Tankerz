@@ -8,7 +8,7 @@
 @{
     Layout = null;
 }
-<form asp-page="/BlogCategories/CreateModal" onkeydown="return event.key != 'Enter';">
+<form asp-page="/BlogCategories/CreateModal" onkeydown="return event.key != 'Enter';" id="form-with-ck">
     <abp-modal centered="true" scrollable="true" size="ExtraLarge" id="myModal">
         <abp-modal-header class="text-uppercase" title="Thêm mới danh mục tin tức"></abp-modal-header>
         <abp-modal-body class="custom-modal-body">
@@ -30,8 +30,8 @@
                             <div class="modal-custom-content">
                                 <p class="section-modal-title">Hình đại diện</p>
                                 <div id="single-media-picker">
-                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Images" />
-                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.Images" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
                                 </div>
                             </div>
                             <div class="modal-custom-content">
@@ -47,22 +47,21 @@
                             <div class="modal-custom-content">
                                 <p class="section-modal-title">Banner</p>
                                 <div id="multiple-media-picker">
-                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Banners" />
-                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring='"[{\"id\":\"b943e32d-ca1d-b067-a084-39fd7ce667fe\",\"name\":\"img1\",\"url\":\"/Media/data/img1.webp\",\"imageSmallUrl\":\"/Media/data/small/img1.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"36dfb70c-dcfb-6193-3727-39fd7ce66a5c\",\"name\":\"img3\",\"url\":\"/Media/data/img3.webp\",\"imageSmallUrl\":\"/Media/data/small/img3.webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"a576b667-7741-02b8-d6a7-39fd7fc45b9e\",\"name\":\"img1\",\"url\":\"/Media/data/img1(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img1(1).webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"d4b43c5d-6e26-2a9f-07ef-39fd7fc45cc3\",\"name\":\"img2\",\"url\":\"/Media/data/img2(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img2(1).webp\",\"extension\":\".webp\",\"checked\":true},{\"id\":\"bdc5621a-f5b3-0840-b0bc-39fd7fc45de1\",\"name\":\"img3\",\"url\":\"/Media/data/img3(1).webp\",\"imageSmallUrl\":\"/Media/data/small/img3(1).webp\",\"extension\":\".webp\",\"checked\":true}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.Banners" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
                                 </div>
                             </div>
                             <div class="modal-custom-content">
                                 <abp-input asp-for="BlogCategory.Name" />
                                 <abp-input asp-for="BlogCategory.Description" />
-                                <abp-input asp-for="BlogCategory.Tags" />
                             </div>
-                            <div class="modal-custom-content">
+                            @*<div class="modal-custom-content">
                                 <p class="section-modal-title">Hình ảnh liên quan</p>
                                 <div id="multiple-media-picker-product">
-                                    <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.Images" />
-                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.Images" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -76,8 +75,8 @@
                     <div class="modal-custom-content">
                         <p class="section-modal-title">Meta Thumbnail</p>
                         <div id="meta-media-picker">
-                            <abp-input type="hidden" :value="jsonPostString" asp-for="BlogCategory.MetaThumbnail" />
-                            <file v-bind:ismultiple="false" v-bind:jsonpoststring='"[{\"id\":\"c8c78435-3855-f28a-b922-39fd7ce66931\",\"name\":\"img2\",\"url\":\"/Media/data/img2.webp\",\"imageSmallUrl\":\"/Media/data/small/img2.webp\",\"extension\":\".webp\",\"checked\":false}]"' v-on:pass_data_to_parent="passDataToParent"></file>
+                            <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.MetaThumbnail" />
+                            <file v-bind:ismultiple="false" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
                         </div>
                     </div>
                 </div>
@@ -87,9 +86,17 @@
     </abp-modal>
     <abp-script src="/assets/js/mediapicker.js" />
     <script>
-        CKEDITOR.replace('BlogCategory_Description', {
+        var editor = CKEDITOR.replace('BlogCategory_Description', {
             filebrowserBrowseUrl: '/MediaManagement',
             customConfig: '/custom/ckeditor_config.js'
         });
+        editor.on('change', function () {
+            updateAllMessageForms()
+        });
+        function updateAllMessageForms() {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
     </script>
 </form>

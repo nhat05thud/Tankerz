@@ -6,7 +6,6 @@
         public string Images { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Tags { get; set; }
         public int Priority { get; set; }
         public bool IsPublish { get; set; }
         public bool IsShowOnMenu { get; set; }

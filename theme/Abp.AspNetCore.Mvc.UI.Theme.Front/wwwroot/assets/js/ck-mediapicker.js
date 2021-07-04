@@ -113,7 +113,6 @@ new Vue({
             return (match && match.length > 1) ? match[1] : null;
         },
         sendImageToEditor() {
-            debugger;
             var listFileUrl = _.join(_.map(this.lstChooses, function (file) {
                 return file.url;
             }), [separator = ','])
