@@ -228,6 +228,7 @@ namespace Tankerz.Web
             app.UseAuditing();
             app.UseAbpSerilogEnrichers();
             app.UseConfiguredEndpoints();
+            app.UseStatusCodePagesWithRedirects("/Errors/{0}");
         }
     }
 }

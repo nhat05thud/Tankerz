@@ -1,0 +1,21 @@
+﻿@page
+@using Tankerz.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<TankerzResource> L
+@model Tankerz.Web.Pages.Errors._404Model
+@{
+}
+
+<div class="row align-items-sm-center py-sm-10">
+    <div class="col-sm-6">
+        <div class="text-center text-sm-right mr-sm-4 mb-5 mb-sm-0">
+            <img class="w-60 w-sm-100 mx-auto" src="/assets/svg/illustrations/think.svg" alt="Image Description" style="max-width: 15rem;">
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-4 text-center text-sm-left">
+        <h1 class="display-1 mb-0">404</h1>
+        <p class="lead">@L["Page404Description"]</p>
+        <a class="btn btn-primary" href="/">@L["GoBackToHomePage"]</a>
+    </div>
+</div>

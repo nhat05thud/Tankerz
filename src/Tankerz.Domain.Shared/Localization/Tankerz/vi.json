@@ -29,6 +29,8 @@
     "Blog": "Trends",
     "ProductCategory": "Danh mục sản phẩm",
     "ProductGroup": "Nhóm sản phẩm",
-    "Product": "Sản phẩm"
+    "Product": "Sản phẩm",
+    "Page404Description": "Xin lỗi, không thể tìm thấy trang này.",
+    "GoBackToHomePage": "Trở về trang chủ"
   }
 }
