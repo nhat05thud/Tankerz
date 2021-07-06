@@ -41,7 +41,8 @@ namespace Tankerz.Web.Pages.BlogCategories
                 IsPublish = true;
             }
             public string Banners { get; set; }
-            public string Images { get; set; }
+            public string Image { get; set; }
+            public string ListImages { get; set; }
             [Required]
             [StringLength(256)]
             public string Name { get; set; }

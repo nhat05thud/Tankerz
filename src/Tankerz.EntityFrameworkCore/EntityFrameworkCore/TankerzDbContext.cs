@@ -32,9 +32,9 @@ namespace Tankerz.EntityFrameworkCore
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
-        //public DbSet<ProductGroup> ProductGroups { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
         //public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<TankerzFile> TankerzFiles { get; set; }
         public DbSet<TankerzFolder> TankerzFolders { get; set; }

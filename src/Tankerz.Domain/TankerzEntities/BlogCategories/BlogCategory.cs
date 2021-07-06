@@ -13,7 +13,8 @@ namespace Tankerz.TankerzEntities.BlogCategories
             IsShowOnHomePage = false;
         }
         public virtual string Banners { get; set; }
-        public virtual string Images { get; set; }
+        public virtual string Image { get; set; }
+        public virtual string ListImages { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual int Priority { get; set; }

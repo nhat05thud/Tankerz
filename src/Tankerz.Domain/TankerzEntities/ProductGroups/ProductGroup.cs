@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Domain.Entities.Auditing;
+﻿using System.Collections.Generic;
+using Tankerz.TankerzEntities.ProductCategories;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Tankerz.TankerzEntities.ProductGroups
 {
@@ -10,20 +12,22 @@ namespace Tankerz.TankerzEntities.ProductGroups
             IsShowOnMenu = false;
             IsShowOnHomePage = false;
         }
-        public string Banners { get; set; }
-        public string Images { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int Priority { get; set; }
-        public bool IsPublish { get; set; }
-        public bool IsShowOnMenu { get; set; }
-        public bool IsShowOnHomePage { get; set; }
+        public virtual string Banners { get; set; }
+        public virtual string Image { get; set; }
+        public virtual string ListImages { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual int Priority { get; set; }
+        public virtual bool IsPublish { get; set; }
+        public virtual bool IsShowOnMenu { get; set; }
+        public virtual bool IsShowOnHomePage { get; set; }
+        public virtual List<ProductCategory> ProductCategories { get; set; }
 
 
-        public string MetaTitle { get; set; }
-        public string MetaDescription { get; set; }
-        public string MetaKeyword { get; set; }
-        public string MetaTag { get; set; }
-        public string MetaThumbnail { get; set; }
+        public virtual string MetaTitle { get; set; }
+        public virtual string MetaDescription { get; set; }
+        public virtual string MetaKeyword { get; set; }
+        public virtual string MetaTag { get; set; }
+        public virtual string MetaThumbnail { get; set; }
     }
 }

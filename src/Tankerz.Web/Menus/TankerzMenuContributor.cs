@@ -33,8 +33,7 @@ namespace Tankerz.Web.Menus
                     order: 0
                 )
             );
-            context.Menu.Items.Insert(
-                1,
+            context.Menu.AddItem(
                 new ApplicationMenuItem(
                     TankerzMenus.Blog,
                     l["Menu:Blog"],
@@ -43,15 +42,38 @@ namespace Tankerz.Web.Menus
                     order: 0
                 )
             );
-            context.Menu.Items.Insert(
-                1,
+            context.Menu.AddItem(
                 new ApplicationMenuItem(
-                    TankerzMenus.BlogCategory,
-                    l["Menu:BlogCategory"],
-                    "~/BlogCategories",
-                    icon: "fas fa-newspaper",
-                    order: 0
-                )
+                        TankerzMenus.AdminManagement, 
+                        l["Menu:AdminManagement"],
+                        null,
+                        icon: "fas fa-users-cog",
+                        order: 1
+                    )
+                    .AddItem(new ApplicationMenuItem(
+                        TankerzMenus.BlogCategory,
+                            l["Menu:BlogCategory"],
+                            "~/BlogCategories",
+                            icon: "fas fa-newspaper",
+                            order: 0
+                        )
+                    )
+                    .AddItem(new ApplicationMenuItem(
+                            TankerzMenus.ProductGroup,
+                            l["Menu:ProductGroup"],
+                            "~/ProductGroups",
+                            icon: "fas fa-newspaper",
+                            order: 0
+                        )
+                    )
+                    .AddItem(new ApplicationMenuItem(
+                            TankerzMenus.ProductCategory,
+                            l["Menu:ProductCategory"],
+                            "~/ProductCategories",
+                            icon: "fas fa-newspaper",
+                            order: 0
+                        )
+                    )
             );
 
             if (MultiTenancyConsts.IsEnabled)

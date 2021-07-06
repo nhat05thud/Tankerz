@@ -68,29 +68,29 @@ namespace Tankerz.EntityFrameworkCore
             });
 
 
-            //builder.Entity<Product>(b =>
-            //{
-            //    b.ToTable(TankerzConsts.DbTablePrefix + "Products",
-            //              TankerzConsts.DbSchema);
-            //    b.ConfigureByConvention();
-            //    b.Property(x => x.Name).IsRequired().HasMaxLength(256);
-            //    b.Property(x => x.Price).HasColumnType("decimal(18,2)");
-            //    b.Property(x => x.OldPrice).HasColumnType("decimal(18,2)");
-            //});
-            //builder.Entity<ProductCategory>(b =>
-            //{
-            //    b.ToTable(TankerzConsts.DbTablePrefix + "ProductCategories",
-            //              TankerzConsts.DbSchema);
-            //    b.ConfigureByConvention();
-            //    b.Property(x => x.Name).IsRequired().HasMaxLength(256);
-            //});
-            //builder.Entity<ProductGroup>(b =>
-            //{
-            //    b.ToTable(TankerzConsts.DbTablePrefix + "ProductGroups",
-            //              TankerzConsts.DbSchema);
-            //    b.ConfigureByConvention();
-            //    b.Property(x => x.Name).IsRequired().HasMaxLength(256);
-            //});
+            builder.Entity<Product>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "Products",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+                b.Property(x => x.Price).HasColumnType("decimal(18,2)");
+                b.Property(x => x.OldPrice).HasColumnType("decimal(18,2)");
+            });
+            builder.Entity<ProductCategory>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "ProductCategories",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+            });
+            builder.Entity<ProductGroup>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "ProductGroups",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+            });
 
             //builder.Entity<ProductAttribute>(b =>
             //{

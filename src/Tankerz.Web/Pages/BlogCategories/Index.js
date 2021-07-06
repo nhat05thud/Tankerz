@@ -117,7 +117,7 @@
         dataTable.ajax.reload();
     });
 
-    $('#NewBlogCategoryButton').click(function (e) {
+    $('#CreateNew').click(function (e) {
         e.preventDefault();
         createModal.open();
     });

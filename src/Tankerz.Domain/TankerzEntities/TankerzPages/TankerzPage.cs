@@ -8,19 +8,19 @@ namespace Tankerz.TankerzEntities.TankerzPages
         {
             IsPublish = true;
         }
-        public string Banners { get; set; }
-        public string Image { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Content { get; set; }
-        public int Priority { get; set; }
-        public bool IsPublish { get; set; }
+        public virtual string Banners { get; set; }
+        public virtual string Image { get; set; }
+        public virtual string ListImages { get; set; }
+        public virtual string Name { get; set; }
+        public virtual string Description { get; set; }
+        public virtual string Content { get; set; }
+        public virtual int Priority { get; set; }
+        public virtual bool IsPublish { get; set; }
 
-
-        public string MetaTitle { get; set; }
-        public string MetaDescription { get; set; }
-        public string MetaKeyword { get; set; }
-        public string MetaTag { get; set; }
-        public string MetaThumbnail { get; set; }
+        public virtual string MetaTitle { get; set; }
+        public virtual string MetaDescription { get; set; }
+        public virtual string MetaKeyword { get; set; }
+        public virtual string MetaTag { get; set; }
+        public virtual string MetaThumbnail { get; set; }
     }
 }

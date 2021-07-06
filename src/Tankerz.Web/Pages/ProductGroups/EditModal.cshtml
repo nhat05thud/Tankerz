@@ -1,0 +1,103 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Web.Pages.ProductGroups
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model EditModalModel
+@inject IStringLocalizer<TankerzResource> L
+@{
+    Layout = null;
+}
+<form asp-page="/ProductGroups/EditModal" onkeydown="return event.key != 'Enter';" id="form-with-ck">
+    <abp-input asp-for="ProductGroup.Id" />
+    <abp-modal centered="true" scrollable="true" size="ExtraLarge" id="myModal">
+        <abp-modal-header class="text-uppercase" title="Chỉnh sửa danh mục tin tức"></abp-modal-header>
+        <abp-modal-body class="custom-modal-body">
+            <!-- Nav -->
+            <div class="text-left">
+                <ul class="nav nav-segment nav-pills mb-2" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-one-eg1-tab" data-toggle="pill" href="#nav-one-eg1" role="tab" aria-controls="nav-one-eg1" aria-selected="true">Thông tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-two-eg1-tab" data-toggle="pill" href="#nav-two-eg1" role="tab" aria-controls="nav-two-eg1" aria-selected="false">SEO</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="nav-one-eg1" role="tabpanel" aria-labelledby="nav-one-eg1-tab">
+                    <div class="row">
+                        <div class="col-custom-3">
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Hình đại diện</p>
+                                <div id="single-media-picker">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="ProductGroup.Image" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="'@(!string.IsNullOrEmpty(Model.ProductGroup.Image) ? Model.ProductGroup.Image : "")'" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Thuộc tính:</p>
+                                <abp-input asp-for="ProductGroup.IsPublish" label="Hiển thị" />
+                                <abp-input asp-for="ProductGroup.IsShowOnMenu" label="Show → Menu" />
+                                <abp-input asp-for="ProductGroup.IsShowOnHomePage" label="Show → Trang chủ" />
+                                <br />
+                                <abp-input asp-for="ProductGroup.Priority" label="Số thứ tự" />
+                            </div>
+                        </div>
+                        <div class="col-custom-9">
+                            <div class="modal-custom-content">
+                                <p class="section-modal-title">Banner</p>
+                                <div id="multiple-media-picker">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="ProductGroup.Banners" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring="'@(!string.IsNullOrEmpty(Model.ProductGroup.Banners) ? Model.ProductGroup.Banners : "")'" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                            <div class="modal-custom-content">
+                                <abp-input asp-for="ProductGroup.Name" />
+                                <abp-input asp-for="ProductGroup.Description" />
+                            </div>
+                            @*<div class="modal-custom-content">
+                                    <p class="section-modal-title">Hình ảnh liên quan</p>
+                                    <div id="multiple-media-picker-product">
+                                        <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.Images" />
+                                        <file v-bind:ismultiple="true" v-bind:jsonpoststring="@Model.BlogCategory.Images" v-on:pass_data_to_parent="passDataToParent"></file>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-two-eg1" role="tabpanel" aria-labelledby="nav-two-eg1-tab">
+                    <div class="modal-custom-content">
+                        <abp-input asp-for="ProductGroup.MetaTitle" />
+                        <abp-input asp-for="ProductGroup.MetaDescription" />
+                        <abp-input asp-for="ProductGroup.MetaKeyword" />
+                        <abp-input asp-for="ProductGroup.MetaTag" />
+                    </div>
+                    <div class="modal-custom-content">
+                        <p class="section-modal-title">Meta Thumbnail</p>
+                        <div id="meta-media-picker">
+                            <abp-input type="hidden" v-model="jsonPostString" asp-for="ProductGroup.MetaThumbnail" />
+                            <file v-bind:ismultiple="false" v-bind:jsonpoststring="'@(!string.IsNullOrEmpty(Model.ProductGroup.MetaThumbnail) ? Model.ProductGroup.MetaThumbnail : "")'" v-on:pass_data_to_parent="passDataToParent"></file>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+    <abp-script src="/assets/js/mediapicker.js" />
+    <script>
+        var editor = CKEDITOR.replace('ProductGroup_Description', {
+            filebrowserBrowseUrl: '/MediaManagement',
+            customConfig: '/custom/ckeditor_config.js'
+        });
+        editor.on('change', function () {
+            updateAllMessageForms()
+        });
+        function updateAllMessageForms() {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+    </script>
+</form>

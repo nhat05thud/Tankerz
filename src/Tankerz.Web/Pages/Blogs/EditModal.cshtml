@@ -31,8 +31,8 @@
                             <div class="modal-custom-content">
                                 <p class="section-modal-title">Hình đại diện</p>
                                 <div id="single-media-picker">
-                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Blog.Images" />
-                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="'@(!string.IsNullOrEmpty(Model.Blog.Images) ? Model.Blog.Images : "")'" v-on:pass_data_to_parent="passDataToParent"></file>
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Blog.Image" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="'@(!string.IsNullOrEmpty(Model.Blog.Image) ? Model.Blog.Image : "")'" v-on:pass_data_to_parent="passDataToParent"></file>
                                 </div>
                             </div>
                             <div class="modal-custom-content">

@@ -40,4 +40,9 @@
 		<PackageReference Include="Volo.Abp.TenantManagement.Web" Version="4.3.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Tankerz.Application.Contracts\Tankerz.Application.Contracts.csproj" />
+	  <ProjectReference Include="..\..\src\Tankerz.Domain\Tankerz.Domain.csproj" />
+	</ItemGroup>
+
 </Project>

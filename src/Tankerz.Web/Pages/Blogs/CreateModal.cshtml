@@ -30,7 +30,7 @@
                             <div class="modal-custom-content">
                                 <p class="section-modal-title">Hình đại diện</p>
                                 <div id="single-media-picker">
-                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Blog.Images" />
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Blog.Image" />
                                     <file v-bind:ismultiple="false" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
                                 </div>
                             </div>

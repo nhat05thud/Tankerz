@@ -5,7 +5,8 @@ namespace Tankerz.Blogs
     public class BlogDto : FullAuditedEntityDto<int>
     {
         public string Banners { get; set; }
-        public string Images { get; set; }
+        public string Image { get; set; }
+        public string ListImages { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }

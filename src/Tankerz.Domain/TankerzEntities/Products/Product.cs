@@ -13,7 +13,6 @@ namespace Tankerz.TankerzEntities.Products
         public string Banners { get; set; }
         public string Image { get; set; }
         public string ListImages { get; set; }
-        public ProductAttributeType ProductAttributeType { get; set; }
         public decimal Price { get; set; }
         public decimal OldPrice { get; set; }
         public string Name { get; set; }
@@ -24,6 +23,7 @@ namespace Tankerz.TankerzEntities.Products
         public bool IsPublish { get; set; }
         public bool IsShowOnHomePage { get; set; }
         public int ProductCategoryId { get; set; }
+        public ProductAttributeType ProductAttributeType { get; set; }
 
 
         public string MetaTitle { get; set; }

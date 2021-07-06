@@ -1,0 +1,40 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Permissions
+@using Tankerz.Web.Pages.ProductCategories
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IStringLocalizer<TankerzResource> L
+@inject IAuthorizationService AuthorizationService
+@inject IPageLayout PageLayout
+@model IndexModel
+@{
+    PageLayout.Content.Title = L["ProductCategory"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:ProductCategory"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.ProductCategory;
+}
+@section scripts
+{
+    <abp-script src="/Pages/ProductCategories/Index.js" />
+}
+
+<abp-card class="custom-card">
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["ProductCategories"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                <abp-button id="CreateNew"
+                            text="@L["NewProductCategory"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="false" id="ProductCategoriesTable"></abp-table>
+    </abp-card-body>
+</abp-card>

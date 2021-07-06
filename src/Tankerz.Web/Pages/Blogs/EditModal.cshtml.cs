@@ -50,7 +50,8 @@ namespace Tankerz.Web.Pages.Blogs
             [HiddenInput]
             public int Id { get; set; }
             public string Banners { get; set; }
-            public string Images { get; set; }
+            public string Image { get; set; }
+            public string ListImages { get; set; }
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
