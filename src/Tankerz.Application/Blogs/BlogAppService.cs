@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Tankerz.Blogs
 {
+    [Authorize]
     public class BlogAppService : 
         CrudAppService<
             Blog,
@@ -77,8 +79,7 @@ namespace Tankerz.Blogs
                 return blogDto;
             }).ToList();
 
-            //Get the total count with another query
-            var totalCount = await Repository.GetCountAsync();
+            var totalCount = blogDtos.Count();
 
             return new PagedResultDto<BlogDto>(
                 totalCount,

@@ -4,10 +4,17 @@
 @using Tankerz.Web.Pages.ProductGroups
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IPageLayout PageLayout
 @inject IStringLocalizer<TankerzResource> L
 @inject IAuthorizationService AuthorizationService
 @model IndexModel
-
+@{
+    PageLayout.Content.Title = L["ProductGroup"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:ProductGroup"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.ProductCategory;
+}
 @section scripts
 {
     <abp-script src="/Pages/ProductGroups/Index.js" />
@@ -21,13 +28,13 @@
             </abp-column>
             <abp-column size-md="_6" class="text-right">
                 <abp-button id="CreateNew"
-                            text="@L["NewProductGroup"].Value"
+                            text="@L["AddNew"].Value"
                             icon="plus"
                             button-type="Primary" />
             </abp-column>
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-table striped-rows="false" id="ProductGroupsTable"></abp-table>
+        <abp-table striped-rows="false" id="main_table--page"></abp-table>
     </abp-card-body>
 </abp-card>

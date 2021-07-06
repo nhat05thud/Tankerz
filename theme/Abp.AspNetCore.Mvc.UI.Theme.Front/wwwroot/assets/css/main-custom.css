@@ -1,4 +1,11 @@
-﻿.card-header .row {
+﻿.navbar-vertical-fixed .navbar-vertical-footer-offset {
+    padding-bottom: 30px;
+}
+div.dataTables_wrapper div.dataTables_length label {
+    padding-top: 4px;
+}
+/*========================*/
+.card-header .row {
     width: 100%;
     margin: 0;
     align-items: center;

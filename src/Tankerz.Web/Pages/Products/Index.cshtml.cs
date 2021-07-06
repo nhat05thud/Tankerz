@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tankerz.ProductCategories;
 
 namespace Tankerz.Web.Pages.Products
 {
+    [Authorize]
     public class IndexModel : TankerzPageModel
     {
         [BindProperty]

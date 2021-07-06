@@ -3,7 +3,7 @@
     var createModal = new abp.ModalManager(abp.appPath + 'ProductCategories/CreateModal');
     var editModal = new abp.ModalManager(abp.appPath + 'ProductCategories/EditModal');
 
-    var dataTable = $('#ProductCategoriesTable').DataTable(
+    var dataTable = $('#main_table--page').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,

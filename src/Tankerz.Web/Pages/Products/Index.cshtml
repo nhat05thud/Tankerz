@@ -28,7 +28,7 @@
                 @if (Int32.TryParse(Request.Query["category"], out int numValue))
                 {
                     <abp-button id="CreateNew"
-                                text="@L["NewProduct"].Value"
+                                text="@L["AddNew"].Value"
                                 icon="plus"
                                 button-type="Primary" />
                 }
@@ -36,6 +36,6 @@
         </abp-row>
     </abp-card-header>
     <abp-card-body>
-        <abp-table striped-rows="false" id="ProductsTable"></abp-table>
+        <abp-table striped-rows="false" id="main_table--page"></abp-table>
     </abp-card-body>
 </abp-card>

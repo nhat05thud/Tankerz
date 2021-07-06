@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tankerz.TankerzEntities.ProductCategories;
@@ -10,6 +11,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Tankerz.ProductCategories
 {
+    [Authorize]
     public class ProductCategoryAppService :
         CrudAppService<
             ProductCategory,
@@ -77,7 +79,7 @@ namespace Tankerz.ProductCategories
             }).ToList();
 
             //Get the total count with another query
-            var totalCount = await Repository.GetCountAsync();
+            var totalCount = productCategoryDtos.Count();
 
             return new PagedResultDto<ProductCategoryDto>(
                 totalCount,

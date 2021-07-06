@@ -1,10 +1,12 @@
-﻿using Tankerz.TankerzEntities.ProductGroups;
+﻿using Microsoft.AspNetCore.Authorization;
+using Tankerz.TankerzEntities.ProductGroups;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace Tankerz.ProductGroups
 {
+    [Authorize]
     public class ProductGroupAppService :
         CrudAppService<
             ProductGroup,

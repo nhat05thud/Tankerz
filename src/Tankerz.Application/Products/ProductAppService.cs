@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Tankerz.TankerzEntities.ProductCategories;
@@ -10,6 +11,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Tankerz.Products
 {
+    [Authorize]
     public class ProductAppService :
         CrudAppService<
             Product,
@@ -51,39 +53,40 @@ namespace Tankerz.Products
 
         public override async Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListInput input)
         {
-            //Get the IQueryable<Book> from the repository
-            var queryable = await Repository.GetQueryableAsync();
-
-            //Prepare a query to join books and authors
-            var query = from product in queryable
-                        join productCategory in _productCategoryRepository on product.ProductCategoryId equals productCategory.Id
-                        where input.CateId > 0 && input.CateId == productCategory.Id
-                        select new { product, productCategory };
-
-            //Paging
-            query = query
-                .OrderBy(x => x.product.Priority)
-                .Skip(input.SkipCount)
-                .Take(input.MaxResultCount);
-
-            //Execute the query and get a list
-            var queryResult = await AsyncExecuter.ToListAsync(query);
-
-            //Convert the query result to a list of BookDto objects
-            var productDtos = queryResult.Select(x =>
+            if (input.CateId > 0)
             {
-                var productDto = ObjectMapper.Map<Product, ProductDto>(x.product);
-                productDto.ProductCategoryName = x.productCategory.Name;
-                return productDto;
-            }).ToList();
+                var queryable = await Repository.GetQueryableAsync();
 
-            //Get the total count with another query
-            var totalCount = await Repository.GetCountAsync();
+                var query = from product in queryable
+                            join productCategory in _productCategoryRepository on product.ProductCategoryId equals productCategory.Id
+                            where input.CateId > 0 && input.CateId == productCategory.Id
+                            select new { product, productCategory };
 
-            return new PagedResultDto<ProductDto>(
-                totalCount,
-                productDtos
-            );
+                //Paging
+                query = query
+                    .OrderBy(x => x.product.Priority)
+                    .Skip(input.SkipCount)
+                    .Take(input.MaxResultCount);
+
+                //Execute the query and get a list
+                var queryResult = await AsyncExecuter.ToListAsync(query);
+
+                var productDtos = queryResult.Select(x =>
+                {
+                    var productDto = ObjectMapper.Map<Product, ProductDto>(x.product);
+                    productDto.ProductCategoryName = x.productCategory.Name;
+                    return productDto;
+                }).ToList();
+
+                //Get the total count with another query
+                var totalCount = productDtos.Count();
+
+                return new PagedResultDto<ProductDto>(
+                    totalCount,
+                    productDtos
+                );
+            }
+            return new PagedResultDto<ProductDto>();
         }
         //public async Task<ListResultDto<ProductCategoryLookupDto>> GetProductCategoryLookupAsync()
         //{

@@ -6,15 +6,18 @@
     var editModal = new abp.ModalManager(abp.appPath + 'Products/EditModal');
 
 
-    var dataTable = $('#ProductsTable').DataTable(
+    var dataTable = $('#main_table--page').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             processing: true,
             serverSide: true,
             paging: true,
+            pageLength: 25,
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(tankerz.products.product.getList, { cateId: requestCate }),
+            ajax: abp.libs.datatables.createAjax(tankerz.products.product.getList, function () {
+                return { cateId: requestCate, maxResultCount: 25 }
+            }),
             columnDefs: [
                 {
                     width: 70,

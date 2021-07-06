@@ -2,9 +2,17 @@
 @using Microsoft.AspNetCore.Mvc.Localization
 @using Tankerz.Localization
 @using Volo.Abp.Users
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IPageLayout PageLayout
 @model Tankerz.Web.Pages.IndexModel
 @inject IHtmlLocalizer<TankerzResource> L
 @inject ICurrentUser CurrentUser
+@{
+    PageLayout.Content.Title = L["Home"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Home"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.Home;
+}
 @section styles {
     <abp-style src="/Pages/Index.css" />
 }
@@ -12,8 +20,8 @@
     <abp-script src="/Pages/Index.js" />
 }
 @*@if (!CurrentUser.IsAuthenticated)
-{
-<a abp-button="Primary" href="~/Account/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>}*@
+    {
+    <a abp-button="Primary" href="~/Account/Login"><i class="fa fa-sign-in"></i> @L["Login"]</a>}*@
 
 <div class="content container-fluid">
     <div class="row justify-content-sm-center text-center py-10">
