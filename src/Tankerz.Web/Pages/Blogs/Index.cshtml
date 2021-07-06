@@ -4,10 +4,17 @@
 @using Tankerz.Web.Pages.Blogs
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IPageLayout PageLayout
 @inject IStringLocalizer<TankerzResource> L
 @inject IAuthorizationService AuthorizationService
 @model IndexModel
-
+@{
+    PageLayout.Content.Title = L["Blog"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:Blog"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.BlogCategory;
+}
 @section scripts
 {
     <abp-script src="/Pages/Blogs/Index.js" />
@@ -17,7 +24,7 @@
     <abp-card-header>
         <abp-row>
             <abp-column size-md="_6">
-                <abp-card-title>@L["Blogs"]</abp-card-title>
+                <abp-card-title>@L["Blog"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-right">
                 <abp-button id="CreateNew"

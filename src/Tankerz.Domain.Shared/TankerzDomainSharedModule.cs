@@ -43,7 +43,7 @@ namespace Tankerz
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<TankerzResource>("en")
+                    .Add<TankerzResource>("vi")
                     .AddBaseTypes(typeof(AbpValidationResource))
                     .AddVirtualJson("/Localization/Tankerz");
 

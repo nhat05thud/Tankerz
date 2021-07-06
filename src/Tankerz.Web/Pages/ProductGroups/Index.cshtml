@@ -13,7 +13,7 @@
 @{
     PageLayout.Content.Title = L["ProductGroup"].Value;
     PageLayout.Content.BreadCrumb.Add(L["Menu:ProductGroup"].Value);
-    PageLayout.Content.MenuItemName = TankerzMenus.ProductCategory;
+    PageLayout.Content.MenuItemName = TankerzMenus.ProductGroup;
 }
 @section scripts
 {
@@ -24,7 +24,7 @@
     <abp-card-header>
         <abp-row>
             <abp-column size-md="_6">
-                <abp-card-title>@L["ProductGroups"]</abp-card-title>
+                <abp-card-title>@L["ProductGroup"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-right">
                 <abp-button id="CreateNew"

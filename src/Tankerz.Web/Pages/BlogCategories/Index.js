@@ -13,9 +13,10 @@
             ajax: abp.libs.datatables.createAjax(tankerz.blogCategories.blogCategory.getList),
             columnDefs: [
                 {
-                    width: 70,
+                    width: 100,
+                    className: "text-center",
                     title: l('Image'),
-                    data: "images",
+                    data: "image",
                     render: function (data) {
                         if (data != null) {
                             return "<img src=" + JSON.parse(data)[0].imageSmallUrl + " alt=" + JSON.parse(data)[0].name + " width='60px' />";
@@ -54,7 +55,7 @@
                     }
                 },
                 {
-                    width: 150,
+                    width: 180,
                     className: "text-center",
                     title: l('IsShowOnHomePage'),
                     data: "isShowOnHomePage",
@@ -80,10 +81,7 @@
                                 {
                                     text: l('Delete'),
                                     confirmMessage: function (data) {
-                                        return l(
-                                            'AuthorDeletionConfirmationMessage',
-                                            data.record.name
-                                        );
+                                        return l('DeletionConfirmationMessage', data.record.name);
                                     },
                                     action: function (data) {
                                         tankerz.blogCategories.blogCategory
