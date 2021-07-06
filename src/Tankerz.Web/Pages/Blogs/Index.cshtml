@@ -11,9 +11,8 @@
 @inject IAuthorizationService AuthorizationService
 @model IndexModel
 @{
-    PageLayout.Content.Title = L["Blog"].Value;
-    PageLayout.Content.BreadCrumb.Add(L["Menu:Blog"].Value);
-    PageLayout.Content.MenuItemName = TankerzMenus.BlogCategory;
+    PageLayout.Content.Title = Model.Blog.Name;
+    PageLayout.Content.MenuItemName = Model.Blog.Name;
 }
 @section scripts
 {
@@ -27,10 +26,13 @@
                 <abp-card-title>@L["Blog"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-right">
-                <abp-button id="CreateNew"
-                            text="@L["AddNew"].Value"
-                            icon="plus"
-                            button-type="Primary" />
+                @if (Int32.TryParse(Request.Query["cateid"], out int numValue))
+                {
+                    <abp-button id="CreateNew"
+                                text="@L["AddNew"].Value"
+                                icon="plus"
+                                button-type="Primary" />
+                }
             </abp-column>
         </abp-row>
     </abp-card-header>

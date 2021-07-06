@@ -1,15 +1,13 @@
-﻿using System.Threading.Tasks;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+﻿using Volo.Abp.Application.Services;
 
 namespace Tankerz.Blogs
 {
     public interface IBlogAppService : ICrudAppService<
             BlogDto,
             int,
-            PagedAndSortedResultRequestDto,
+            GetBlogListInput,
             CreateUpdateBlogDto>
     {
-        Task<ListResultDto<BlogCategoryLookupDto>> GetBlogCategoryLookupAsync();
+        //Task<ListResultDto<BlogCategoryLookupDto>> GetBlogCategoryLookupAsync();
     }
 }

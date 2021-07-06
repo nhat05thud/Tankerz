@@ -10,6 +10,7 @@
 }
 <form asp-page="/Blogs/EditModal" onkeydown="return event.key != 'Enter';" id="form-with-ck">
     <abp-input asp-for="Blog.Id" />
+    <abp-input asp-for="Blog.BlogCategoryId" />
     <abp-modal centered="true" scrollable="true" size="ExtraLarge" id="myModal">
         <abp-modal-header class="text-uppercase" title="Chỉnh sửa tin tức"></abp-modal-header>
         <abp-modal-body class="custom-modal-body">
@@ -42,7 +43,7 @@
                                 <abp-input asp-for="Blog.IsShowOnHomePage" label="Show → Trang chủ" />
                                 <br />
                                 <abp-input asp-for="Blog.Priority" label="Số thứ tự" />
-                                <abp-select asp-for="Blog.CategoryId" label="Danh mục" />
+                                <abp-input asp-for="Blog.BlogCategoryName" disabled="true" label="Danh mục" />
                             </div>
                         </div>
                         <div class="col-custom-9">

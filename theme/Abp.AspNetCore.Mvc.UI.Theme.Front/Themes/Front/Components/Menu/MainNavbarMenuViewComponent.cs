@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Tankerz.ProductGroups;
+using Tankerz.TankerzEntities.BlogCategories;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
 using Volo.Abp.AspNetCore.Mvc;
@@ -17,32 +18,36 @@ namespace Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Menu
         private readonly IMenuManager _menuManager;
         private readonly IRepository<ProductGroup, int> _productGroupRepository;
         private readonly IRepository<ProductCategory, int> _productCategoryRepository;
+        private readonly IRepository<BlogCategory, int> _blogCategoryRepository;
         protected IPageLayout PageLayout { get; }
 
         public MainNavbarMenuViewComponent(
-            IMenuManager menuManager, 
-            IPageLayout pageLayout,
-            IRepository<ProductGroup, int> productGroupRepository,
-            IRepository<ProductCategory, int> productCategoryRepository
+                IMenuManager menuManager, 
+                IPageLayout pageLayout,
+                IRepository<ProductGroup, int> productGroupRepository,
+                IRepository<ProductCategory, int> productCategoryRepository,
+                IRepository<BlogCategory, int> blogCategoryRepository
             )
         {
             _menuManager = menuManager;
             PageLayout = pageLayout;
             _productGroupRepository = productGroupRepository;
             _productCategoryRepository = productCategoryRepository;
+            _blogCategoryRepository = blogCategoryRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var menu = await _menuManager.GetAsync(StandardMenus.Main);
-
+            // default menu index
+            var menuIndex = 1;
             // add dynamic productgroup menu
-            var productGroup = await _productGroupRepository.GetListAsync();
-            var productGroupWithOrder = productGroup.OrderBy(x => x.Priority).ToList();
+            var productGroups = await _productGroupRepository.GetListAsync();
+            var productGroupsWithOrder = productGroups.OrderBy(x => x.Priority).ToList();
 
-            foreach (var group in productGroupWithOrder)
+            foreach (var group in productGroupsWithOrder)
             {
-                var productGroupMenus = new ApplicationMenuItem(group.Name, group.Name, null, "fas fa-tshirt", productGroupWithOrder.IndexOf(group));
+                var productGroupMenus = new ApplicationMenuItem(group.Name, group.Name, null, "fas fa-tshirt", menuIndex);
 
                 var catetegories = await _productCategoryRepository.GetListAsync(x => x.ProductGroupId == group.Id);
 
@@ -52,16 +57,33 @@ namespace Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Menu
                         new ApplicationMenuItem(
                             cate.Name,
                             cate.Name,
-                            "~/Products?category=" + cate.Id,
+                            "~/Products?cateid=" + cate.Id,
                             "fas fa-th-large",
                             0
                         )
                     );
                 }
-                menu.Items.Insert(productGroupWithOrder.IndexOf(group) + 1, productGroupMenus);
+                menu.Items.Insert(menuIndex, productGroupMenus);
+                menuIndex++;
+            }
+
+            // add dynamic blogcategory menu
+            var blogCategories = await _blogCategoryRepository.GetListAsync();
+            var blogCategoriesWithOrder = blogCategories.OrderBy(x => x.Priority).ToList();
+            foreach (var blogCate in blogCategoriesWithOrder)
+            {
+                var productGroupMenus = new ApplicationMenuItem(
+                    blogCate.Name,
+                    blogCate.Name, 
+                    "~/Blogs?cateid=" + blogCate.Id, 
+                    "fas fa-newspaper", 
+                    0
+                );
+
+                menu.Items.Insert(menuIndex, productGroupMenus);
+                menuIndex++;
             }
             // ======================================== //
-
             if (!PageLayout.Content.MenuItemName.IsNullOrEmpty())
             {
                 SetActiveMenuItems(menu.Items, PageLayout.Content.MenuItemName);

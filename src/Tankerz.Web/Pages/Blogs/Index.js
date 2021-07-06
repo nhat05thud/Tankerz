@@ -1,6 +1,8 @@
 ﻿$(function () {
+    var requestCate = getParameterByName("cateid") != null ? getParameterByName("cateid") : 0;
+
     var l = abp.localization.getResource('Tankerz');
-    var createModal = new abp.ModalManager(abp.appPath + 'Blogs/CreateModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Blogs/CreateModal/?id=' + requestCate);
     var editModal = new abp.ModalManager(abp.appPath + 'Blogs/EditModal');
 
     var dataTable = $('#main_table--page').DataTable(
@@ -10,7 +12,9 @@
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(tankerz.blogs.blog.getList),
+            ajax: abp.libs.datatables.createAjax(tankerz.blogs.blog.getList, function () {
+                return { cateId: requestCate, maxResultCount: 25 }
+            }),
             columnDefs: [
                 {
                     width: 100,

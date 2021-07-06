@@ -1,5 +1,5 @@
 ﻿$(function () {
-    var requestCate = getParameterByName("category") != null ? getParameterByName("category") : 0;
+    var requestCate = getParameterByName("cateid") != null ? getParameterByName("cateid") : 0;
 
     var l = abp.localization.getResource('Tankerz');
     var createModal = new abp.ModalManager(abp.appPath + 'Products/CreateModal/?id=' + requestCate);

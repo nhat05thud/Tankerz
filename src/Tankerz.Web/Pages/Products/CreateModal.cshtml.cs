@@ -29,12 +29,21 @@ namespace Tankerz.Web.Pages.Products
 
         public async Task OnGetAsync(int id)
         {
-            var category = await _productCategoryAppService.GetAsync(id);
-            
-            Product = new CreateProductViewModel {
-                ProductCategoryId = category.Id,
-                ProductCategoryName = category.Name
-            };
+            Product = new CreateProductViewModel();
+
+            if (id > 0)
+            {
+                var category = await _productCategoryAppService.GetAsync(id);
+
+                if (category != null)
+                {
+                    Product = new CreateProductViewModel
+                    {
+                        ProductCategoryId = category.Id,
+                        ProductCategoryName = category.Name
+                    };
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()

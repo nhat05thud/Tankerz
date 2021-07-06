@@ -25,7 +25,7 @@
                 <abp-card-title>@L["Product"]</abp-card-title>
             </abp-column>
             <abp-column size-md="_6" class="text-right">
-                @if (Int32.TryParse(Request.Query["category"], out int numValue))
+                @if (Int32.TryParse(Request.Query["cateid"], out int numValue))
                 {
                     <abp-button id="CreateNew"
                                 text="@L["AddNew"].Value"

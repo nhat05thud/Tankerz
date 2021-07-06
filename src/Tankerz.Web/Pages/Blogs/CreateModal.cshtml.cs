@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Tankerz.BlogCategories;
 using Tankerz.Blogs;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
@@ -17,24 +12,32 @@ namespace Tankerz.Web.Pages.Blogs
         [BindProperty]
         public CreateBlogViewModel Blog { get; set; }
 
-        public List<SelectListItem> BlogCategories { get; set; }
-
 
         private readonly IBlogAppService _blogAppService;
+        private readonly IBlogCategoryAppService _blogCategoryAppService;
 
-        public CreateModalModel(IBlogAppService blogAppService)
+        public CreateModalModel(IBlogAppService blogAppService, IBlogCategoryAppService blogCategoryAppService)
         {
             _blogAppService = blogAppService;
+            _blogCategoryAppService = blogCategoryAppService;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int id)
         {
             Blog = new CreateBlogViewModel();
 
-            var blogCategoryLookup = await _blogAppService.GetBlogCategoryLookupAsync();
-            BlogCategories = blogCategoryLookup.Items
-                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                .ToList();
+            if (id > 0)
+            {
+                var category = await _blogCategoryAppService.GetAsync(id);
+                if (category != null)
+                {
+                    Blog = new CreateBlogViewModel
+                    {
+                        BlogCategoryId = category.Id,
+                        BlogCategoryName = category.Name
+                    };
+                }
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -50,9 +53,8 @@ namespace Tankerz.Web.Pages.Blogs
             {
                 IsPublish = true;
             }
-            [SelectItems(nameof(BlogCategories))]
-            [DisplayName("Category")]
-            public int CategoryId { get; set; }
+            public int BlogCategoryId { get; set; }
+            public string BlogCategoryName { get; set; }
 
             public string Banners { get; set; }
             public string Image { get; set; }

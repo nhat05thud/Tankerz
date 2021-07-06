@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Tankerz.BlogCategories;
 using Tankerz.Blogs;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
@@ -19,10 +20,12 @@ namespace Tankerz.Web.Pages.Blogs
         public List<SelectListItem> BlogCategories { get; set; }
 
         private readonly IBlogAppService _blogAppService;
+        private readonly IBlogCategoryAppService _blogCategoryAppService;
 
-        public EditModalModel(IBlogAppService blogAppService)
+        public EditModalModel(IBlogAppService blogAppService, IBlogCategoryAppService blogCategoryAppService)
         {
             _blogAppService = blogAppService;
+            _blogCategoryAppService = blogCategoryAppService;
         }
 
         public async Task OnGetAsync(int id)
@@ -30,10 +33,15 @@ namespace Tankerz.Web.Pages.Blogs
             var blogDto = await _blogAppService.GetAsync(id);
             Blog = ObjectMapper.Map<BlogDto, EditBlogViewModel>(blogDto);
 
-            var blogCategoryLookup = await _blogAppService.GetBlogCategoryLookupAsync();
-            BlogCategories = blogCategoryLookup.Items
-                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
-                .ToList();
+            var category = await _blogCategoryAppService.GetAsync(blogDto.CategoryId);
+            if (category != null)
+            {
+                Blog.BlogCategoryName = category.Name;
+            }
+            else
+            {
+                Blog.BlogCategoryName = "Null --- Category";
+            }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -49,6 +57,8 @@ namespace Tankerz.Web.Pages.Blogs
         {
             [HiddenInput]
             public int Id { get; set; }
+            public int BlogCategoryId { get; set; }
+            public string BlogCategoryName { get; set; }
             public string Banners { get; set; }
             public string Image { get; set; }
             public string ListImages { get; set; }
@@ -64,9 +74,6 @@ namespace Tankerz.Web.Pages.Blogs
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }
             public bool IsShowOnHomePage { get; set; }
-            [SelectItems(nameof(BlogCategories))]
-            [DisplayName("Category")]
-            public int CategoryId { get; set; }
 
 
             public string MetaTitle { get; set; }

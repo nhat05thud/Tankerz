@@ -20,7 +20,7 @@ namespace Tankerz.Blogs
             Blog,
             BlogDto,
             int,
-            PagedAndSortedResultRequestDto,
+            GetBlogListInput,
             CreateUpdateBlogDto>,
         IBlogAppService
     {
@@ -52,7 +52,7 @@ namespace Tankerz.Blogs
             return blogDto;
         }
 
-        public override async Task<PagedResultDto<BlogDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        public override async Task<PagedResultDto<BlogDto>> GetListAsync(GetBlogListInput input)
         {
             //Get the IQueryable<Book> from the repository
             var queryable = await Repository.GetQueryableAsync();
@@ -60,6 +60,7 @@ namespace Tankerz.Blogs
             //Prepare a query to join books and authors
             var query = from blog in queryable
                         join blogCategory in _blogCategoriesRepository on blog.CategoryId equals blogCategory.Id
+                        where input.CateId > 0 && input.CateId == blogCategory.Id
                         select new { blog, blogCategory };
 
             //Paging
@@ -86,13 +87,13 @@ namespace Tankerz.Blogs
                 blogDtos
             );
         }
-        public async Task<ListResultDto<BlogCategoryLookupDto>> GetBlogCategoryLookupAsync()
-        {
-            var blogCategories = await _blogCategoriesRepository.GetListAsync();
+        //public async Task<ListResultDto<BlogCategoryLookupDto>> GetBlogCategoryLookupAsync()
+        //{
+        //    var blogCategories = await _blogCategoriesRepository.GetListAsync();
 
-            return new ListResultDto<BlogCategoryLookupDto>(
-                ObjectMapper.Map<List<BlogCategory>, List<BlogCategoryLookupDto>>(blogCategories)
-            );
-        }
+        //    return new ListResultDto<BlogCategoryLookupDto>(
+        //        ObjectMapper.Map<List<BlogCategory>, List<BlogCategoryLookupDto>>(blogCategories)
+        //    );
+        //}
     }
 }

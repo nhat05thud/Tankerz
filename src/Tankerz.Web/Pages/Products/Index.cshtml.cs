@@ -19,13 +19,14 @@ namespace Tankerz.Web.Pages.Products
             _productCategoryAppService = productCategoryAppService;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int cateid)
         {
             Product = new ProductCateViewModel();
-            if (int.TryParse(Request.Query["category"], out int numValue))
+
+            if (cateid > 0)
             {
-                var category = await _productCategoryAppService.GetAsync(int.Parse(Request.Query["category"]));
-                Product.Name = category.Name;
+                var category = await _productCategoryAppService.GetAsync(cateid);
+                Product.Name = category.Name ?? "";
             }
         }
         public class ProductCateViewModel

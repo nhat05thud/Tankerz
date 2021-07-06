@@ -35,15 +35,6 @@ namespace Tankerz.Web.Menus
             );
             context.Menu.AddItem(
                 new ApplicationMenuItem(
-                    TankerzMenus.Blog,
-                    l["Menu:Blog"],
-                    "~/Blogs",
-                    icon: "fas fa-newspaper",
-                    order: 0
-                )
-            );
-            context.Menu.AddItem(
-                new ApplicationMenuItem(
                         TankerzMenus.AdminManagement, 
                         l["Menu:AdminManagement"],
                         null,
@@ -78,15 +69,15 @@ namespace Tankerz.Web.Menus
 
             if (MultiTenancyConsts.IsEnabled)
             {
-                administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 1);
+                administration.SetSubItemOrder(TenantManagementMenuNames.GroupName, 98);
             }
             else
             {
                 administration.TryRemoveMenuItem(TenantManagementMenuNames.GroupName);
             }
 
-            administration.SetSubItemOrder(IdentityMenuNames.GroupName, 2);
-            administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 3);
+            administration.SetSubItemOrder(IdentityMenuNames.GroupName, 99);
+            administration.SetSubItemOrder(SettingManagementMenuNames.GroupName, 100);
         }
     }
 }
