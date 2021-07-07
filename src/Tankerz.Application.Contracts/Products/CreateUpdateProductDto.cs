@@ -10,15 +10,15 @@ namespace Tankerz.Products
         public decimal Price { get; set; }
         public decimal OldPrice { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
-        public int Priority { get; set; }
+        public int DisplayOrder { get; set; }
         public bool IsSpecial { get; set; }
         public bool IsPublish { get; set; }
         public bool IsShowOnHomePage { get; set; }
         public int ProductCategoryId { get; set; }
         public string ProductCategoryName { get; set; }
-
 
         public string MetaTitle { get; set; }
         public string MetaDescription { get; set; }

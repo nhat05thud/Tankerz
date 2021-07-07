@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Tankerz.Helper;
 using Tankerz.ProductGroups;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
@@ -30,6 +31,8 @@ namespace Tankerz.Web.Pages.ProductGroups
 
         public async Task<IActionResult> OnPostAsync()
         {
+            ProductGroup.Slug = StringHelper.GenerateSlug(ProductGroup.Slug);
+
             var dto = ObjectMapper.Map<EditProductGroupViewModel, CreateUpdateProductGroupDto>(ProductGroup);
             await _productGroupAppService.UpdateAsync(ProductGroup.Id, dto);
             return NoContent();
@@ -45,9 +48,11 @@ namespace Tankerz.Web.Pages.ProductGroups
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }
             public bool IsShowOnHomePage { get; set; }

@@ -47,7 +47,7 @@
                     width: 150,
                     className: "text-center",
                     title: l('Priority'),
-                    data: "priority"
+                    data: "displayOrder"
                 },
                 {
                     width: 150,

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Tankerz.Helper
@@ -20,6 +21,25 @@ namespace Tankerz.Helper
             while (str.Contains("--"))
                 str = str.Replace("--", "-");
             return (str.StartsWith("-") ? str.Remove(0, 1) : (str.EndsWith("-") ? str.Remove(str.Length - 1) : str)).ToLower();
+        }
+        public static string GenerateSlug(this string phrase)
+        {
+            phrase = new Regex("[^0-9a-zA-Z-]+").Replace(new Regex("\\p{IsCombiningDiacriticalMarks}+").Replace(phrase.Normalize(NormalizationForm.FormD), string.Empty).Replace('đ', 'd').Replace('Đ', 'D'), " ");
+
+            string str = phrase.RemoveAccent().ToLower();
+            // invalid chars           
+            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
+            // convert multiple spaces into one space   
+            str = Regex.Replace(str, @"\s+", " ").Trim();
+
+            str = Regex.Replace(str, @"\s", "-"); // hyphens   
+
+            return str;
+        }
+        public static string RemoveAccent(this string txt)
+        {
+            byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
+            return System.Text.Encoding.ASCII.GetString(bytes);
         }
     }
 }

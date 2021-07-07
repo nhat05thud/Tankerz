@@ -65,7 +65,7 @@ namespace Tankerz.Blogs
 
             //Paging
             query = query
-                .OrderBy(x => x.blog.Priority)
+                .OrderBy(x => x.blog.DisplayOrder)
                 .Skip(input.SkipCount)
                 .Take(input.MaxResultCount);
 

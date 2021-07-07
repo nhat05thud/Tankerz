@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Tankerz.Helper;
 using Tankerz.ProductCategories;
 using Tankerz.Products;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
@@ -48,6 +49,8 @@ namespace Tankerz.Web.Pages.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Product.Slug = StringHelper.GenerateSlug(Product.Slug);
+
             var dto = ObjectMapper.Map<CreateProductViewModel, CreateUpdateProductDto>(Product);
             await _productAppService.CreateAsync(dto);
             return NoContent();
@@ -69,11 +72,13 @@ namespace Tankerz.Web.Pages.Products
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
             [TextArea]
             public string Content { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsSpecial { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnHomePage { get; set; }

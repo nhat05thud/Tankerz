@@ -64,7 +64,7 @@ namespace Tankerz.Products
 
                 //Paging
                 query = query
-                    .OrderBy(x => x.product.Priority)
+                    .OrderBy(x => x.product.DisplayOrder)
                     .Skip(input.SkipCount)
                     .Take(input.MaxResultCount);
 

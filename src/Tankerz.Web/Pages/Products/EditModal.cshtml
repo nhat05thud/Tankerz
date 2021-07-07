@@ -41,7 +41,7 @@
                                 <abp-input asp-for="Product.IsPublish" label="Hiển thị" />
                                 <abp-input asp-for="Product.IsShowOnHomePage" label="Show → Trang chủ" />
                                 <br />
-                                <abp-input asp-for="Product.Priority" label="Số thứ tự" />
+                                <abp-input asp-for="Product.DisplayOrder" label="Số thứ tự" />
                                 <abp-input asp-for="Product.ProductCategoryName" disabled="true" label="Danh mục" />
                             </div>
                         </div>
@@ -54,9 +54,15 @@
                                 </div>
                             </div>
                             <div class="modal-custom-content">
-                                <abp-input asp-for="Product.Name" />
-                                <abp-input asp-for="Product.Price" />
-                                <abp-input asp-for="Product.OldPrice" />
+                                <div class="unique-name">
+                                    <abp-input asp-for="Product.Name" autocomplete="off" />
+                                </div>
+                                <div class="unique-slug">
+                                    <i class="fas fa-cogs" onclick="updateSlug(this)"></i>
+                                    <abp-input asp-for="Product.Slug" readonly="true" autocomplete="off" />
+                                </div>
+                                <abp-input asp-for="Product.Price" autocomplete="off" />
+                                <abp-input asp-for="Product.OldPrice" autocomplete="off" />
                                 <abp-input asp-for="Product.Description" />
                                 <abp-input asp-for="Product.Content" />
                             </div>
@@ -72,10 +78,10 @@
                 </div>
                 <div class="tab-pane fade" id="nav-two-eg1" role="tabpanel" aria-labelledby="nav-two-eg1-tab">
                     <div class="modal-custom-content">
-                        <abp-input asp-for="Product.MetaTitle" />
-                        <abp-input asp-for="Product.MetaDescription" />
-                        <abp-input asp-for="Product.MetaKeyword" />
-                        <abp-input asp-for="Product.MetaTag" />
+                        <abp-input asp-for="Product.MetaTitle" autocomplete="off" />
+                        <abp-input asp-for="Product.MetaDescription" autocomplete="off" />
+                        <abp-input asp-for="Product.MetaKeyword" autocomplete="off" />
+                        <abp-input asp-for="Product.MetaTag" autocomplete="off" />
                     </div>
                     <div class="modal-custom-content">
                         <p class="section-modal-title">Meta Thumbnail</p>

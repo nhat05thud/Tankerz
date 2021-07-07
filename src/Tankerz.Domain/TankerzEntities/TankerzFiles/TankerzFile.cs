@@ -3,7 +3,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Tankerz.TankerzEntities.TankerzFiles
 {
-    public class TankerzFile : FullAuditedAggregateRoot<Guid>
+    public class TankerzFile : FullAuditedAggregateRoot<int>
     {
         public string Name { get; set; }
         public string FilePath { get; set; }

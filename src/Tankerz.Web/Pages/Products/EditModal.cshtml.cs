@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Tankerz.Helper;
 using Tankerz.ProductCategories;
 using Tankerz.Products;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
@@ -38,6 +39,8 @@ namespace Tankerz.Web.Pages.Products
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Product.Slug = StringHelper.GenerateSlug(Product.Slug);
+
             await _productAppService.UpdateAsync(
                 Product.Id,
                 ObjectMapper.Map<EditProductViewModel, CreateUpdateProductDto>(Product)
@@ -59,11 +62,13 @@ namespace Tankerz.Web.Pages.Products
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
             [TextArea]
             public string Content { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsSpecial { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnHomePage { get; set; }

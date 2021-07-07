@@ -43,7 +43,7 @@ namespace Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Menu
             var menuIndex = 1;
             // add dynamic productgroup menu
             var productGroups = await _productGroupRepository.GetListAsync();
-            var productGroupsWithOrder = productGroups.OrderBy(x => x.Priority).ToList();
+            var productGroupsWithOrder = productGroups.OrderBy(x => x.DisplayOrder).ToList();
 
             foreach (var group in productGroupsWithOrder)
             {
@@ -69,7 +69,7 @@ namespace Abp.AspNetCore.Mvc.UI.Theme.Front.Themes.Front.Components.Menu
 
             // add dynamic blogcategory menu
             var blogCategories = await _blogCategoryRepository.GetListAsync();
-            var blogCategoriesWithOrder = blogCategories.OrderBy(x => x.Priority).ToList();
+            var blogCategoriesWithOrder = blogCategories.OrderBy(x => x.DisplayOrder).ToList();
             foreach (var blogCate in blogCategoriesWithOrder)
             {
                 var productGroupMenus = new ApplicationMenuItem(

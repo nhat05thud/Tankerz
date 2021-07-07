@@ -19,11 +19,11 @@ namespace Tankerz.TankerzFiles
     public class TankerzFileAppService : ApplicationService, ITankerzFileAppService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-        private readonly IRepository<TankerzFile, Guid> _tankerzFileRepository;
+        private readonly IRepository<TankerzFile, int> _tankerzFileRepository;
         private readonly IRepository<TankerzFolder, int> _tankerzFolderRepository;
         public TankerzFileAppService(
             IWebHostEnvironment webHostEnvironment,
-            IRepository<TankerzFile, Guid> tankerzFileRepository,
+            IRepository<TankerzFile, int> tankerzFileRepository,
             IRepository<TankerzFolder, int> tankerzFolderRepository)
         {
             _webHostEnvironment = webHostEnvironment;

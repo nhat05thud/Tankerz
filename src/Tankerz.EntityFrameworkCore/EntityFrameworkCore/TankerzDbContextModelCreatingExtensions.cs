@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tankerz.TankerzEntities.BlogCategories;
 using Tankerz.TankerzEntities.Blogs;
+using Tankerz.TankerzEntities.ProductAttributeOptions;
 using Tankerz.TankerzEntities.ProductAttributes;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
@@ -92,13 +93,20 @@ namespace Tankerz.EntityFrameworkCore
                 b.Property(x => x.Name).IsRequired().HasMaxLength(256);
             });
 
-            //builder.Entity<ProductAttribute>(b =>
-            //{
-            //    b.ToTable(TankerzConsts.DbTablePrefix + "ProductAttributes",
-            //              TankerzConsts.DbSchema);
-            //    b.ConfigureByConvention();
-            //    b.Property(x => x.Name).IsRequired().HasMaxLength(256);
-            //});
+            builder.Entity<ProductAttribute>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "ProductAttributes",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+            });
+            builder.Entity<ProductAttributeOption>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "ProductAttributeOptions",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
+                b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+            });
         }
     }
 }

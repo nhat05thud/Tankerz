@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Tankerz.BlogCategories;
 using Tankerz.Blogs;
+using Tankerz.Helper;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
 namespace Tankerz.Web.Pages.Blogs
@@ -42,6 +43,8 @@ namespace Tankerz.Web.Pages.Blogs
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Blog.Slug = StringHelper.GenerateSlug(Blog.Slug);
+
             var dto = ObjectMapper.Map<CreateBlogViewModel, CreateUpdateBlogDto>(Blog);
             await _blogAppService.CreateAsync(dto);
             return NoContent();
@@ -62,12 +65,14 @@ namespace Tankerz.Web.Pages.Blogs
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
             [TextArea]
             public string Content { get; set; }
             public string Tags { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }
             public bool IsShowOnHomePage { get; set; }

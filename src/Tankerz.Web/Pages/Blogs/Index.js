@@ -9,6 +9,7 @@
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
+            pageLength: 25,
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
@@ -44,7 +45,7 @@
                     width: 150,
                     className: "text-center",
                     title: l('Priority'),
-                    data: "priority"
+                    data: "displayOrder"
                 },
                 {
                     width: 150,

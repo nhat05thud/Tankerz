@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Tankerz.Helper;
 using Tankerz.ProductCategories;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
@@ -38,6 +39,8 @@ namespace Tankerz.Web.Pages.ProductCategories
 
         public async Task<IActionResult> OnPostAsync()
         {
+            ProductCategory.Slug = StringHelper.GenerateSlug(ProductCategory.Slug);
+
             await _productCategoryAppService.UpdateAsync(
                 ProductCategory.Id,
                 ObjectMapper.Map<EditProductCategoryViewModel, CreateUpdateProductCategoryDto>(ProductCategory)
@@ -55,9 +58,11 @@ namespace Tankerz.Web.Pages.ProductCategories
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }
             public bool IsShowOnHomePage { get; set; }

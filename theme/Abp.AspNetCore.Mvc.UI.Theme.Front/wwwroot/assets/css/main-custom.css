@@ -601,6 +601,45 @@ table.dataTable thead {
     background-color: #F89406
 }
 /**/
+.unique-name .form-group {
+    margin-bottom: 1px;
+}
+    .unique-name .form-group .form-control {
+        border-radius: 0;
+    }
+.unique-slug {
+    position: relative;
+}
+.unique-slug .form-group > label,
+.unique-slug .form-group > span {
+    display: none;
+}
+.unique-slug .form-group input[type="text"] {
+    height: 25px;
+    line-height: 20px;
+    font-size: 12px;
+    background: #f9f9f9;
+    border-radius: 0;
+    padding-right: 25px;
+}
+.unique-slug .form-group input[type="text"]:read-only {
+    cursor: not-allowed;
+}
+.unique-slug i.fas {
+    cursor: pointer;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    right: 0;
+    top: 0;
+    text-align: center;
+    z-index: 2;
+}
+.unique-slug i.fas.fa-check {
+    color: green;
+}
+/**/
 @media (min-width: 768px) {
     .modal-lg .modal-header, .modal-xl .modal-header {
         padding-top: 20px;

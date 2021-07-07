@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tankerz.TankerzEntities.BlogCategories;
 using Tankerz.TankerzEntities.Blogs;
+using Tankerz.TankerzEntities.ProductAttributeOptions;
 using Tankerz.TankerzEntities.ProductAttributes;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
@@ -30,15 +31,18 @@ namespace Tankerz.EntityFrameworkCore
     public class TankerzDbContext : AbpDbContext<TankerzDbContext>
     {
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<TankerzFile> TankerzFiles { get; set; }
+        public DbSet<TankerzFolder> TankerzFolders { get; set; }
+        public DbSet<TankerzPage> TankerzPages { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<BlogCategory> BlogCategories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductGroup> ProductGroups { get; set; }
-        //public DbSet<ProductAttribute> ProductAttributes { get; set; }
-        public DbSet<TankerzFile> TankerzFiles { get; set; }
-        public DbSet<TankerzFolder> TankerzFolders { get; set; }
-        public DbSet<TankerzPage> TankerzPages { get; set; }
+        public DbSet<ProductAttribute> ProductAttributes { get; set; }
+        public DbSet<ProductAttributeOption> ProductAttributeOptions { get; set; }
+
+
 
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside TankerzDbContextModelCreatingExtensions.ConfigureTankerz

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Tankerz.BlogCategories;
+using Tankerz.Helper;
 using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
 namespace Tankerz.Web.Pages.BlogCategories
@@ -30,6 +27,8 @@ namespace Tankerz.Web.Pages.BlogCategories
 
         public async Task<IActionResult> OnPostAsync()
         {
+            BlogCategory.Slug = StringHelper.GenerateSlug(BlogCategory.Slug);
+
             var dto = ObjectMapper.Map<EditBlogCategoryViewModel, CreateUpdateBlogCategoryDto>(BlogCategory);
             await _blogCategoryAppService.UpdateAsync(BlogCategory.Id, dto);
             return NoContent();
@@ -45,9 +44,11 @@ namespace Tankerz.Web.Pages.BlogCategories
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
+            [Required]
+            public string Slug { get; set; }
             [TextArea]
             public string Description { get; set; }
-            public int Priority { get; set; }
+            public int DisplayOrder { get; set; }
             public bool IsPublish { get; set; }
             public bool IsShowOnMenu { get; set; }
             public bool IsShowOnHomePage { get; set; }

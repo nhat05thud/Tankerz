@@ -16,13 +16,14 @@ namespace Tankerz.TankerzEntities.ProductGroups
         public virtual string Image { get; set; }
         public virtual string ListImages { get; set; }
         public virtual string Name { get; set; }
+        public virtual string Slug { get; set; }
         public virtual string Description { get; set; }
-        public virtual int Priority { get; set; }
+        public virtual string Content { get; set; }
+        public virtual int DisplayOrder { get; set; }
         public virtual bool IsPublish { get; set; }
         public virtual bool IsShowOnMenu { get; set; }
         public virtual bool IsShowOnHomePage { get; set; }
         public virtual List<ProductCategory> ProductCategories { get; set; }
-
 
         public virtual string MetaTitle { get; set; }
         public virtual string MetaDescription { get; set; }
