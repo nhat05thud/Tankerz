@@ -60,7 +60,7 @@ namespace Tankerz.Web.Pages.Blogs
         {
             [HiddenInput]
             public int Id { get; set; }
-            public int BlogCategoryId { get; set; }
+            public int CategoryId { get; set; }
             public string BlogCategoryName { get; set; }
             public string Banners { get; set; }
             public string Image { get; set; }

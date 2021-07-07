@@ -34,7 +34,7 @@ namespace Tankerz.Web.Pages.Blogs
                 {
                     Blog = new CreateBlogViewModel
                     {
-                        BlogCategoryId = category.Id,
+                        CategoryId = category.Id,
                         BlogCategoryName = category.Name
                     };
                 }
@@ -56,7 +56,7 @@ namespace Tankerz.Web.Pages.Blogs
             {
                 IsPublish = true;
             }
-            public int BlogCategoryId { get; set; }
+            public int CategoryId { get; set; }
             public string BlogCategoryName { get; set; }
 
             public string Banners { get; set; }
