@@ -57,18 +57,11 @@
                                     <abp-input asp-for="ProductGroup.Name" autocomplete="off" />
                                 </div>
                                 <div class="unique-slug">
-                                    <i class="fas fa-cogs" onclick="updateSlug(this)"></i>
-                                    <abp-input asp-for="ProductGroup.Slug" readonly="true" autocomplete="off" />
+                                    <i class="fas fa-pencil-alt" onclick="updateSlug(this)"></i>
+                                    <abp-input asp-for="ProductGroup.Slug" readonly="true" placeholder="" autocomplete="off" suppress-label="true" />
                                 </div>
                                 <abp-input asp-for="ProductGroup.Description" />
                             </div>
-                            @*<div class="modal-custom-content">
-                                    <p class="section-modal-title">Hình ảnh liên quan</p>
-                                    <div id="multiple-media-picker-product">
-                                        <abp-input type="hidden" v-model="jsonPostString" asp-for="BlogCategory.Images" />
-                                        <file v-bind:ismultiple="true" v-bind:jsonpoststring="@Model.BlogCategory.Images" v-on:pass_data_to_parent="passDataToParent"></file>
-                                    </div>
-                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -93,6 +86,7 @@
     </abp-modal>
     <abp-script src="/assets/js/mediapicker.js" />
     <script>
+        abp.ui.unblock();
         var editor = CKEDITOR.replace('ProductGroup_Description', {
             filebrowserBrowseUrl: '/MediaManagement',
             customConfig: '/custom/ckeditor_config.js'

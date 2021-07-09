@@ -1,0 +1,183 @@
+﻿@page
+@using Tankerz.Localization
+@using System.Globalization
+@using Tankerz.Web.Pages.Products
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@inject IPageLayout PageLayout
+@model CreateModel
+@inject IStringLocalizer<TankerzResource> L
+@section scripts
+{
+    <abp-script src="/assets/js/mediapicker.js" />
+    <script>
+        var description = CKEDITOR.replace('Product_Description', {
+            filebrowserBrowseUrl: '/MediaManagement',
+            customConfig: '/custom/ckeditor_config.js'
+        });
+        description.on('change', function () {
+            updateAllMessageForms()
+        });
+        var content = CKEDITOR.replace('Product_Content', {
+            filebrowserBrowseUrl: '/MediaManagement',
+            customConfig: '/custom/ckeditor_config.js'
+        });
+        content.on('change', function () {
+            updateAllMessageForms()
+        });
+        function updateAllMessageForms() {
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+        }
+    </script>
+}
+@if (Model.Product.ProductCategoryId > 0)
+{
+    PageLayout.Content.Title = Model.Product.Name;
+    PageLayout.Content.MenuItemName = Model.Product.ProductCategoryName;
+
+    <form asp-page="/Products/Create" onkeydown="return event.key != 'Enter';" id="form-with-ck">
+        <abp-input asp-for="Product.ProductCategoryId" />
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col-sm-6 mb-2 mb-sm-0">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-no-gutter">
+                            <li class="breadcrumb-item"><a class="breadcrumb-link" href="/Products?cateid=@Model.Product.ProductCategoryId">@Model.Product.ProductCategoryName</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">@L["AddProduct"]</li>
+                        </ol>
+                    </nav>
+                    <h1 class="page-header-title">@L["AddProduct"]</h1>
+                </div>
+                <div class="col-sm-6 mb-2 mb-sm-0 text-right">
+                    <button class="btn-primary btn submit-with-busy" type="submit"><i class="fa-check fa"></i> <span>Lưu</span></button>
+                    <button class="btn-secondary btn back-to-history" data-href="/Products?cateid=@Model.Product.ProductCategoryId" type="button">Hủy bỏ</button>
+                </div>
+            </div>
+        </div>
+        <!-- Nav -->
+        <div class="text-center mb-3">
+            <ul class="nav nav-segment nav-pills mb-2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav-one-eg1-tab" data-toggle="pill" href="#nav-one-eg1" role="tab" aria-controls="nav-one-eg1" aria-selected="true">Thông tin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-two-eg1-tab" data-toggle="pill" href="#nav-two-eg1" role="tab" aria-controls="nav-two-eg1" aria-selected="false">SEO</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="nav-one-eg1" role="tabpanel" aria-labelledby="nav-one-eg1-tab">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">Banners</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="multiple-media-picker" class="media-picker-element">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Product.Banners" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">Thông tin sản phẩm</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="unique-name">
+                                    <label for="productNameLabel" class="input-label">
+                                        Name
+                                        <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Products are the goods or services you sell."></i>
+                                    </label>
+                                    <abp-input asp-for="Product.Name" onkeyup="onUniqueNameChange(this)" placeholder="Shirt, t-shirts, etc." autocomplete="off" suppress-label="true" />
+                                </div>
+                                <div class="unique-slug">
+                                    <i class="fas fa-pencil-alt" onclick="updateSlug(this)"></i>
+                                    <abp-input asp-for="Product.Slug" readonly="true" placeholder="" autocomplete="off" suppress-label="true" />
+                                </div>
+                                <abp-input asp-for="Product.Price" value="@Model.Product.Price.ToString(CultureInfo.InvariantCulture)" autocomplete="off" />
+                                <abp-input asp-for="Product.OldPrice" value="@Model.Product.OldPrice.ToString(CultureInfo.InvariantCulture)" autocomplete="off" />
+                                <abp-input asp-for="Product.Description" />
+                                <abp-input asp-for="Product.Content" />
+                            </div>
+
+                        </div>
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">Hình ảnh liên quan</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="multiple-media-picker-product">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Product.ListImages" />
+                                    <file v-bind:ismultiple="true" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">Hình đại diện</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="single-media-picker" class="media-picker-element">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Product.Image" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-header-title">Thuộc tính</h4>
+                            </div>
+                            <div class="card-body">
+                                <abp-input asp-for="Product.IsPublish" label="Hiển thị" />
+                                <abp-input asp-for="Product.IsShowOnHomePage" label="Show → Trang chủ" />
+                                <br />
+                                <abp-input asp-for="Product.DisplayOrder" label="Số thứ tự" />
+                                <abp-input asp-for="Product.ProductCategoryName" disabled="true" label="Danh mục" />
+
+                                <label for="tagsLabel" class="input-label">Tags</label>
+                                <input type="text" class="js-tagify tagify-form-control form-control" asp-for="Product.Tags" placeholder="Enter tags here" aria-label="Enter tags here">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-two-eg1" role="tabpanel" aria-labelledby="nav-two-eg1-tab">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">SEO</h4>
+                            </div>
+                            <div class="card-body">
+                                <abp-input asp-for="Product.MetaTitle" autocomplete="off" />
+                                <abp-input asp-for="Product.MetaDescription" autocomplete="off" />
+                                <abp-input asp-for="Product.MetaKeyword" autocomplete="off" />
+                                <abp-input asp-for="Product.MetaTag" autocomplete="off" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card mb-3 mb-lg-5">
+                            <div class="card-header">
+                                <h4 class="card-header-title">MetaThumbnail</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="meta-media-picker">
+                                    <abp-input type="hidden" v-model="jsonPostString" asp-for="Product.MetaThumbnail" />
+                                    <file v-bind:ismultiple="false" v-bind:jsonpoststring="''" v-on:pass_data_to_parent="passDataToParent"></file>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}

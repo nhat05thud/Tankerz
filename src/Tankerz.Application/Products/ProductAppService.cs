@@ -36,7 +36,7 @@ namespace Tankerz.Products
             //Prepare a query to join books and authors
             var query = from product in queryable
                         join productCategory in _productCategoryRepository on product.ProductCategoryId equals productCategory.Id
-                        where productCategory.Id == id
+                        where product.Id == id
                         select new { product, productCategory };
 
             //Execute the query and get the book with author

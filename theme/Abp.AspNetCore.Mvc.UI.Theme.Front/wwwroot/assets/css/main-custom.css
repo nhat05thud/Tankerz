@@ -4,6 +4,10 @@
 div.dataTables_wrapper div.dataTables_length label {
     padding-top: 4px;
 }
+.abp-block-area {
+    z-index: 999;
+    background-color: rgba(19,33,68,.25);
+}
 /*========================*/
 .card-header .row {
     width: 100%;
@@ -144,7 +148,7 @@ table.dataTable thead {
 /*Modal media picker*/
 .media-modal-mask {
     position: fixed;
-    z-index: 9;
+    z-index: 999;
     top: 0;
     left: 0;
     width: 100%;
@@ -601,43 +605,44 @@ table.dataTable thead {
     background-color: #F89406
 }
 /**/
-.unique-name .form-group {
-    margin-bottom: 1px;
-}
-    .unique-name .form-group .form-control {
-        border-radius: 0;
-    }
 .unique-slug {
     position: relative;
 }
-.unique-slug .form-group > label,
-.unique-slug .form-group > span {
-    display: none;
-}
-.unique-slug .form-group input[type="text"] {
-    height: 25px;
-    line-height: 20px;
-    font-size: 12px;
-    background: #f9f9f9;
-    border-radius: 0;
-    padding-right: 25px;
-}
-.unique-slug .form-group input[type="text"]:read-only {
-    cursor: not-allowed;
-}
-.unique-slug i.fas {
-    cursor: pointer;
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    right: 0;
-    top: 0;
-    text-align: center;
-    z-index: 2;
-}
+    .unique-slug .form-group input[type="text"]:read-only {
+        cursor: not-allowed;
+        background: #f9f9f9;
+    }
+    .unique-slug i.fas {
+        cursor: pointer;
+        position: absolute;
+        width: 41px;
+        height: 41px;
+        line-height: 41px;
+        right: 0;
+        top: 0;
+        text-align: center;
+        z-index: 2;
+    }
+    .unique-slug i.fas:hover {
+        color: red;
+    }
 .unique-slug i.fas.fa-check {
     color: green;
+}
+/**/
+.page-header .breadcrumb {
+    margin-bottom: 1rem;
+}
+.media-picker-element .form-group {
+    margin-bottom: 0;
+}
+.container-fluid, .container-xxl {
+    padding-right: 2rem;
+    padding-left: 2rem;
+}
+.page-header {
+    border-bottom: 0;
+    margin-bottom: 0;
 }
 /**/
 @media (min-width: 768px) {

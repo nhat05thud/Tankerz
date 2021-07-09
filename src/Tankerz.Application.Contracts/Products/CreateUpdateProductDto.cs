@@ -7,12 +7,13 @@ namespace Tankerz.Products
         public string Banners { get; set; }
         public string Image { get; set; }
         public string ListImages { get; set; }
-        public decimal Price { get; set; }
-        public decimal OldPrice { get; set; }
+        public float Price { get; set; }
+        public float OldPrice { get; set; }
         public string Name { get; set; }
         public string Slug { get; set; }
         public string Description { get; set; }
         public string Content { get; set; }
+        public string Tags { get; set; }
         public int DisplayOrder { get; set; }
         public bool IsSpecial { get; set; }
         public bool IsPublish { get; set; }

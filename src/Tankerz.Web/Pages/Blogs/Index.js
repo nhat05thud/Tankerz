@@ -2,8 +2,8 @@
     var requestCate = getParameterByName("cateid") != null ? getParameterByName("cateid") : 0;
 
     var l = abp.localization.getResource('Tankerz');
-    var createModal = new abp.ModalManager(abp.appPath + 'Blogs/CreateModal/?id=' + requestCate);
-    var editModal = new abp.ModalManager(abp.appPath + 'Blogs/EditModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Blogs/Create/?id=' + requestCate);
+    var editModal = new abp.ModalManager(abp.appPath + 'Blogs/Edit');
 
     var dataTable = $('#main_table--page').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -14,7 +14,7 @@
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(tankerz.blogs.blog.getList, function () {
-                return { cateId: requestCate, maxResultCount: 25 }
+                return { cateId: requestCate }
             }),
             columnDefs: [
                 {
@@ -74,10 +74,8 @@
                                 {
                                     text: l('Edit'),
                                     action: function (data) {
-                                        abp.ui.block();
-                                        editModal.open({ id: data.record.id });
-
-                                        abp.ui.unblock();
+                                        abp.ui.block({ busy: true });
+                                        window.location.href = abp.appPath + 'Blogs/Edit?id=' + data.record.id;
                                     }
                                 },
                                 {
@@ -103,22 +101,9 @@
         })
     );
 
-    createModal.onResult(function () {
-        abp.notify.success(
-            l('SuccessfullyCreate')
-        );
-        dataTable.ajax.reload();
-    });
-
-    editModal.onResult(function () {
-        abp.notify.success(
-            l('SuccessfullyEdit')
-        );
-        dataTable.ajax.reload();
-    });
-
     $('#CreateNew').click(function (e) {
+        abp.ui.block({ busy: true });
         e.preventDefault();
-        createModal.open();
+        window.location.href = abp.appPath + 'Blogs/Create/?cateid=' + requestCate;
     });
 });

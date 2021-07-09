@@ -1,12 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Tankerz.BlogCategories;
 using Tankerz.Blogs;
 using Tankerz.Helper;
@@ -14,34 +8,36 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
 namespace Tankerz.Web.Pages.Blogs
 {
-    public class EditModalModel : TankerzPageModel
+    public class CreateModel : TankerzPageModel
     {
         [BindProperty]
-        public EditBlogViewModel Blog { get; set; }
-        public List<SelectListItem> BlogCategories { get; set; }
+        public CreateBlogViewModel Blog { get; set; }
+
 
         private readonly IBlogAppService _blogAppService;
         private readonly IBlogCategoryAppService _blogCategoryAppService;
 
-        public EditModalModel(IBlogAppService blogAppService, IBlogCategoryAppService blogCategoryAppService)
+        public CreateModel(IBlogAppService blogAppService, IBlogCategoryAppService blogCategoryAppService)
         {
             _blogAppService = blogAppService;
             _blogCategoryAppService = blogCategoryAppService;
         }
 
-        public async Task OnGetAsync(int id)
+        public async Task OnGetAsync(int cateid)
         {
-            var blogDto = await _blogAppService.GetAsync(id);
-            Blog = ObjectMapper.Map<BlogDto, EditBlogViewModel>(blogDto);
+            Blog = new CreateBlogViewModel();
 
-            var category = await _blogCategoryAppService.GetAsync(blogDto.CategoryId);
-            if (category != null)
+            if (cateid > 0)
             {
-                Blog.BlogCategoryName = category.Name;
-            }
-            else
-            {
-                Blog.BlogCategoryName = "Null --- Category";
+                var category = await _blogCategoryAppService.GetAsync(cateid);
+                if (category != null)
+                {
+                    Blog = new CreateBlogViewModel
+                    {
+                        CategoryId = category.Id,
+                        BlogCategoryName = category.Name
+                    };
+                }
             }
         }
 
@@ -49,19 +45,23 @@ namespace Tankerz.Web.Pages.Blogs
         {
             Blog.Slug = StringHelper.GenerateSlug(Blog.Slug);
 
-            await _blogAppService.UpdateAsync(
-                Blog.Id,
-                ObjectMapper.Map<EditBlogViewModel, CreateUpdateBlogDto>(Blog)
-            );
-            return NoContent();
+            var dto = ObjectMapper.Map<CreateBlogViewModel, CreateUpdateBlogDto>(Blog);
+            var blog = await _blogAppService.CreateAsync(dto);
+
+            // return edit page
+            return new RedirectToPageResult("Edit", new { id = blog.Id });
         }
 
-        public class EditBlogViewModel
+        public class CreateBlogViewModel
         {
+            public CreateBlogViewModel()
+            {
+                IsPublish = true;
+            }
             [HiddenInput]
-            public int Id { get; set; }
             public int CategoryId { get; set; }
             public string BlogCategoryName { get; set; }
+
             public string Banners { get; set; }
             public string Image { get; set; }
             public string ListImages { get; set; }

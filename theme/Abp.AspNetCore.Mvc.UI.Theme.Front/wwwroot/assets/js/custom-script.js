@@ -10,7 +10,22 @@
         }
     })
 };
+$('.back-to-history').click(function (e) {
+    abp.ui.block({ busy: true });
+    window.location.href = $(this).data("href");
+});
 
+$('.submit-with-busy').click(function (e) {
+    abp.ui.block({ busy: true });
+    setTimeout(function () {
+        if ($("input, textarea, select").hasClass("input-validation-error")) {
+            abp.ui.unblock();
+        }
+    }, 500);
+});
+$('.js-tagify').each(function () {
+    var tagify = $.HSCore.components.HSTagify.init($(this));
+});
 var sidebar = $('.js-navbar-vertical-aside').hsSideNav();
 $('.js-nav-tooltip-link').tooltip({ boundary: 'window' })
 $(".js-nav-tooltip-link").on("show.bs.tooltip", function (e) {
@@ -37,11 +52,11 @@ function getParameterByName(name, url = window.location.href) {
 }
 function updateSlug(element) {
     if ($(element).hasClass("fa-check")) {
-        $(element).addClass("fa-cogs").removeClass("fa-check");
+        $(element).addClass("fa-pencil-alt").removeClass("fa-check");
         $(".unique-slug .form-group input[type='text']").prop("readonly", true);
     }
     else {
-        $(element).removeClass("fa-cogs").addClass("fa-check");
+        $(element).removeClass("fa-pencil-alt").addClass("fa-check");
         $(".unique-slug .form-group input[type='text']").prop("readonly", false);
         $(".unique-slug .form-group input[type='text']").focus();
     }

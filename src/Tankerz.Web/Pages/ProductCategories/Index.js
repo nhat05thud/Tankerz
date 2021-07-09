@@ -69,10 +69,8 @@
                                 {
                                     text: l('Edit'),
                                     action: function (data) {
-                                        abp.ui.block();
+                                        abp.ui.block({ busy: true });
                                         editModal.open({ id: data.record.id });
-
-                                        abp.ui.unblock();
                                     }
                                 },
                                 {
@@ -113,6 +111,7 @@
     });
 
     $('#CreateNew').click(function (e) {
+        abp.ui.block({ busy: true });
         e.preventDefault();
         createModal.open();
     });

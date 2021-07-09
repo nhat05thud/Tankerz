@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Tankerz.Helper;
 using Tankerz.ProductCategories;
 using Tankerz.Products;
@@ -14,7 +10,8 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Form;
 
 namespace Tankerz.Web.Pages.Products
 {
-    public class CreateModalModel : TankerzPageModel
+    [Authorize]
+    public class CreateModel : TankerzPageModel
     {
         [BindProperty]
         public CreateProductViewModel Product { get; set; }
@@ -22,19 +19,19 @@ namespace Tankerz.Web.Pages.Products
         private readonly IProductAppService _productAppService;
         private readonly IProductCategoryAppService _productCategoryAppService;
 
-        public CreateModalModel(IProductAppService productAppService, IProductCategoryAppService productCategoryAppService)
+        public CreateModel(IProductAppService productAppService, IProductCategoryAppService productCategoryAppService)
         {
             _productAppService = productAppService;
             _productCategoryAppService = productCategoryAppService;
         }
 
-        public async Task OnGetAsync(int id)
+        public async Task OnGetAsync()
         {
+            var cateId = Request.Query["cateid"];
             Product = new CreateProductViewModel();
-
-            if (id > 0)
+            if (int.TryParse(cateId, out int intValue))
             {
-                var category = await _productCategoryAppService.GetAsync(id);
+                var category = await _productCategoryAppService.GetAsync(int.Parse(cateId));
 
                 if (category != null)
                 {
@@ -52,8 +49,10 @@ namespace Tankerz.Web.Pages.Products
             Product.Slug = StringHelper.GenerateSlug(Product.Slug);
 
             var dto = ObjectMapper.Map<CreateProductViewModel, CreateUpdateProductDto>(Product);
-            await _productAppService.CreateAsync(dto);
-            return NoContent();
+            var product = await _productAppService.CreateAsync(dto);
+            
+            // return edit page
+            return new RedirectToPageResult("Edit", new { id = product.Id });
         }
 
         public class CreateProductViewModel
@@ -62,13 +61,15 @@ namespace Tankerz.Web.Pages.Products
             {
                 IsPublish = true;
             }
+            [HiddenInput]
             public int ProductCategoryId { get; set; }
             public string ProductCategoryName { get; set; }
             public string Banners { get; set; }
             public string Image { get; set; }
             public string ListImages { get; set; }
-            public decimal Price { get; set; }
-            public decimal OldPrice { get; set; }
+            [Required]
+            public float Price { get; set; }
+            public float OldPrice { get; set; }
             [Required]
             [StringLength(256)]
             public string Name { get; set; }
@@ -78,6 +79,7 @@ namespace Tankerz.Web.Pages.Products
             public string Description { get; set; }
             [TextArea]
             public string Content { get; set; }
+            public string Tags { get; set; }
             public int DisplayOrder { get; set; }
             public bool IsSpecial { get; set; }
             public bool IsPublish { get; set; }

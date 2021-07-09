@@ -1,7 +1,13 @@
 ﻿$(function () {
+    var productId = $("#Product_Id").val() != "" ? $("#Product_Id").val() : 0;
+
     var l = abp.localization.getResource('Tankerz');
-    var createModal = new abp.ModalManager(abp.appPath + 'BlogCategories/CreateModal');
-    var editModal = new abp.ModalManager(abp.appPath + 'BlogCategories/EditModal');
+    var createModal = new abp.ModalManager(abp.appPath + 'Products/Attributes/CreateModal?productid=' + productId);
+    var editModal = new abp.ModalManager(abp.appPath + 'Products/Attributes/EditModal');
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+    });
 
     var dataTable = $('#main_table--page').DataTable(
         abp.libs.datatables.normalizeConfiguration({
@@ -10,58 +16,21 @@
             order: [[1, "asc"]],
             searching: false,
             scrollX: true,
-            ajax: abp.libs.datatables.createAjax(tankerz.blogCategories.blogCategory.getList),
+            ajax: abp.libs.datatables.createAjax(tankerz.productWithMultipleAttributeOptions.productWithMultipleAttributeOption.getList, function () {
+                return { productId: productId }
+            }),
             columnDefs: [
                 {
-                    width: 100,
-                    className: "text-center",
-                    title: l('Image'),
-                    data: "image",
-                    render: function (data) {
-                        if (data != null) {
-                            return "<img src=" + JSON.parse(data)[0].imageSmallUrl + " alt=" + JSON.parse(data)[0].name + " width='60px' />";
-                        }
-                        else {
-                            return "<img src=\"https://via.placeholder.com/60x60\" alt=\"no image\" width='60px' />";
-                        }
-                    }
+                    title: l('ProductAttributeName'),
+                    data: "productAttributeName"
                 },
                 {
-                    title: l('Name'),
-                    data: "name"
+                    title: l('ProductAttributeOptionName'),
+                    data: "productAttributeOptionName"
                 },
                 {
-                    width: 150,
-                    className: "text-center",
                     title: l('Priority'),
                     data: "displayOrder"
-                },
-                {
-                    width: 150,
-                    className: "text-center",
-                    title: l('IsPublish'),
-                    data: "isPublish",
-                    render: function (data) {
-                        return data ? "<i style=\"color:green\" class=\"fas fa-check-circle\"></i>" : "<i style=\"color:red\" class=\"fas fa-times-circle\"></i>";
-                    }
-                },
-                {
-                    width: 150,
-                    className: "text-center",
-                    title: l('IsShowOnMenu'),
-                    data: "isShowOnMenu",
-                    render: function (data) {
-                        return data ? "<i style=\"color:green\" class=\"fas fa-check-circle\"></i>" : "<i style=\"color:red\" class=\"fas fa-times-circle\"></i>";
-                    }
-                },
-                {
-                    width: 180,
-                    className: "text-center",
-                    title: l('IsShowOnHomePage'),
-                    data: "isShowOnHomePage",
-                    render: function (data) {
-                        return data ? "<i style=\"color:green\" class=\"fas fa-check-circle\"></i>" : "<i style=\"color:red\" class=\"fas fa-times-circle\"></i>";
-                    }
                 },
                 {
                     title: l('Actions'),

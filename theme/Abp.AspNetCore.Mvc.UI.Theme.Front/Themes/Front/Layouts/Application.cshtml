@@ -80,8 +80,6 @@
     <script src="~/Abp/ApplicationConfigurationScript"></script>
     <script src="~/Abp/ServiceProxyScript"></script>
     @await Component.InvokeAsync(typeof(WidgetScriptsViewComponent))
-    @await RenderSectionAsync("scripts", false)
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Application)
 
     @*template mediapicker*@
     <script type="text/x-template" id="add-folder-template">
@@ -252,5 +250,8 @@
             </div>
         </transition>
     </script>
+
+    @await RenderSectionAsync("scripts", false)
+    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Application)
 </body>
 </html>

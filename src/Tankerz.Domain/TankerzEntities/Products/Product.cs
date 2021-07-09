@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Tankerz.TankerzEntities.ProductAttributes;
+using Tankerz.TankerzEntities.ProductAttributeOptions;
+using Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Tankerz.TankerzEntities.Products
@@ -15,8 +16,8 @@ namespace Tankerz.TankerzEntities.Products
         public virtual string Banners { get; set; }
         public virtual string Image { get; set; }
         public virtual string ListImages { get; set; }
-        public virtual decimal Price { get; set; }
-        public virtual decimal OldPrice { get; set; }
+        public virtual float Price { get; set; }
+        public virtual float OldPrice { get; set; }
         public virtual int Quantity { get; set; }
         public virtual string Name { get; set; }
         public virtual string Slug { get; set; }
@@ -28,7 +29,8 @@ namespace Tankerz.TankerzEntities.Products
         public virtual bool IsPublish { get; set; }
         public virtual bool IsShowOnHomePage { get; set; }
         public virtual int ProductCategoryId { get; set; }
-        public virtual List<ProductAttribute> ProductAttributes { get; set; }
+        public virtual List<ProductAttributeOption> ProductAttributeOptions { get; set; }
+        public virtual List<ProductWithMultipleAttributeOption> ProductWithMultipleAttributeOptions { get; set; }
 
         public virtual string MetaTitle { get; set; }
         public virtual string MetaDescription { get; set; }

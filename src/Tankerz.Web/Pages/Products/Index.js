@@ -1,11 +1,7 @@
 ﻿$(function () {
     var requestCate = getParameterByName("cateid") != null ? getParameterByName("cateid") : 0;
-
     var l = abp.localization.getResource('Tankerz');
-    var createModal = new abp.ModalManager(abp.appPath + 'Products/CreateModal/?id=' + requestCate);
-    var editModal = new abp.ModalManager(abp.appPath + 'Products/EditModal');
-
-
+    
     var dataTable = $('#main_table--page').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             processing: true,
@@ -16,7 +12,7 @@
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(tankerz.products.product.getList, function () {
-                return { cateId: requestCate, maxResultCount: 25 }
+                return { cateId: requestCate }
             }),
             columnDefs: [
                 {
@@ -76,10 +72,8 @@
                                 {
                                     text: l('Edit'),
                                     action: function (data) {
-                                        abp.ui.block();
-                                        editModal.open({ id: data.record.id });
-
-                                        abp.ui.unblock();
+                                        abp.ui.block({ busy: true });
+                                        window.location.href = abp.appPath + 'Products/Edit?id=' + data.record.id;
                                     }
                                 },
                                 {
@@ -105,22 +99,9 @@
         })
     );
 
-    createModal.onResult(function () {
-        abp.notify.success(
-            l('SuccessfullyCreate')
-        );
-        dataTable.ajax.reload();
-    });
-
-    editModal.onResult(function () {
-        abp.notify.success(
-            l('SuccessfullyEdit')
-        );
-        dataTable.ajax.reload();
-    });
-
     $('#CreateNew').click(function (e) {
+        abp.ui.block({ busy: true });
         e.preventDefault();
-        createModal.open();
+        window.location.href = abp.appPath + 'Products/Create?cateid=' + requestCate;
     });
 });
