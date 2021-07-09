@@ -1,0 +1,91 @@
+﻿@page
+@using Tankerz.Localization
+@using System.Globalization
+@using Tankerz.Web.Pages.ProductAttributes
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IPageLayout PageLayout
+@model EditModel
+@inject IStringLocalizer<TankerzResource> L
+@{
+    PageLayout.Content.Title = L["ProductAttribute"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:ProductAttribute"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.ProductAttribute;
+}
+@section scripts
+{
+    <abp-script src="/Pages/ProductAttributes/Options/Options.js" />
+}
+<form asp-page="/ProductAttributes/Edit" onkeydown="return event.key != 'Enter';" id="form-with-ck">
+    <abp-input asp-for="ProductAttribute.Id" />
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col-sm-6 mb-2 mb-sm-0">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-no-gutter">
+                        <li class="breadcrumb-item"><a class="breadcrumb-link" href="/ProductAttributes">@L["ProductAttribute"]</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">@L["AddProductAttribute"]</li>
+                    </ol>
+                </nav>
+                <h1 class="page-header-title">@L["AddProductAttribute"]</h1>
+            </div>
+            <div class="col-sm-6 mb-2 mb-sm-0 text-right">
+                <button class="btn-primary btn submit-with-busy" type="submit"><i class="fa-check fa"></i> <span>Lưu</span></button>
+                <button class="btn-secondary btn back-to-history" data-href="/ProductAttributes" type="button">Hủy bỏ</button>
+            </div>
+        </div>
+    </div>
+    <!-- Nav -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3 mb-lg-5">
+                <div class="card-header">
+                    <h4 class="card-header-title">Thông tin</h4>
+                </div>
+                <div class="card-body">
+                    <label for="productNameLabel" class="input-label">
+                        Name
+                        <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="Tên thuộc tính của sản phẩm"></i>
+                    </label>
+                    <abp-input asp-for="ProductAttribute.Name" placeholder="Size, Color, etc." autocomplete="off" suppress-label="true" />
+                </div>
+            </div>
+            <div class="card mb-3 mb-lg-5">
+                <div class="card-header">
+                    <h4 class="card-header-title">Options</h4>
+                </div>
+                <div class="card-body">
+                    <abp-card class="custom-card">
+                        <abp-card-header>
+                            <abp-row>
+                                <abp-column size-md="_6">
+                                    <abp-card-title>@L["ProductAttributeOption"]</abp-card-title>
+                                </abp-column>
+                                <abp-column size-md="_6" class="text-right">
+                                    <abp-button id="CreateNew"
+                                                text="@L["AddNew"].Value"
+                                                icon="plus"
+                                                button-type="Primary" />
+                                </abp-column>
+                            </abp-row>
+                        </abp-card-header>
+                        <abp-card-body>
+                            <abp-table striped-rows="false" id="main_table--page"></abp-table>
+                        </abp-card-body>
+                    </abp-card>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-3 mb-lg-5">
+                <div class="card-header">
+                    <h4 class="card-header-title">Thuộc tính</h4>
+                </div>
+                <div class="card-body">
+                    <abp-input asp-for="ProductAttribute.DisplayOrder" label="Số thứ tự" />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

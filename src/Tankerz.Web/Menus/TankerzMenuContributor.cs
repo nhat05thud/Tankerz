@@ -35,6 +35,15 @@ namespace Tankerz.Web.Menus
             );
             context.Menu.AddItem(
                 new ApplicationMenuItem(
+                        TankerzMenus.ProductAttribute,
+                        l["Menu:ProductAttribute"],
+                        "~/ProductAttributes",
+                        icon: "fas fa-list-alt",
+                        order: 1
+                    )
+            );
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
                         TankerzMenus.AdminManagement, 
                         l["Menu:AdminManagement"],
                         null,

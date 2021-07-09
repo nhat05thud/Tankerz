@@ -1,0 +1,47 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Web.Pages.Products.Attributes
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CreateModalModel
+@inject IStringLocalizer<TankerzResource> L
+@{
+    Layout = null;
+}
+<script>
+    abp.ui.unblock();
+    $("#ProductAttribute_ProductAttributeId").on("change", function () {
+        abp.ui.block({ busy: true });
+        var optionsSelect = $('#ProductAttribute_ProductAttributeOptionId');
+        optionsSelect.empty();
+        abp.ajax({
+            type: 'GET',
+            url: '/Products/Attributes/CreateModal/?handler=Option',
+            data: {
+                attributeid: $(this).val()
+            }
+        }).then(function (results) {
+            abp.ui.unblock();
+
+            if (results != null && !jQuery.isEmptyObject(results)) {
+                $.each(results, function (index, result) {
+                    optionsSelect.append("<option value='" + result.value + "'>" + result.text + "</option>");
+                });
+            };
+        }).catch(function () {
+            console.log("request failed");
+        });
+    });
+</script>
+<form asp-page="/Products/Attributes/CreateModal" onkeydown="return event.key != 'Enter';" id="form-with-ck">
+    <abp-input asp-for="ProductAttribute.ProductId" />
+    <abp-modal centered="true" scrollable="true" size="ExtraLarge" id="myModal">
+        <abp-modal-header class="text-uppercase" title="Thêm mới thuộc tính sản phẩm"></abp-modal-header>
+        <abp-modal-body class="custom-modal-body">
+            <abp-select asp-for="ProductAttribute.ProductAttributeId" label="Thuộc tính" />
+            <abp-select asp-for="ProductAttribute.ProductAttributeOptionId" label="Option" />
+            <abp-input asp-for="ProductAttribute.DisplayOrder" label="Số thứ tự" />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</form>

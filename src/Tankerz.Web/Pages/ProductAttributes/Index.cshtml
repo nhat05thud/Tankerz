@@ -1,0 +1,40 @@
+﻿@page
+@using Tankerz.Localization
+@using Tankerz.Permissions
+@using Tankerz.Web.Pages.ProductAttributes
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Layout
+@using Tankerz.Web.Menus
+@inject IPageLayout PageLayout
+@inject IStringLocalizer<TankerzResource> L
+@inject IAuthorizationService AuthorizationService
+@model IndexModel
+@{
+    PageLayout.Content.Title = L["ProductAttribute"].Value;
+    PageLayout.Content.BreadCrumb.Add(L["Menu:ProductAttribute"].Value);
+    PageLayout.Content.MenuItemName = TankerzMenus.ProductAttribute;
+}
+@section scripts
+{
+    <abp-script src="/Pages/ProductAttributes/Index.js" />
+}
+
+<abp-card class="custom-card">
+    <abp-card-header>
+        <abp-row>
+            <abp-column size-md="_6">
+                <abp-card-title>@L["ProductAttribute"]</abp-card-title>
+            </abp-column>
+            <abp-column size-md="_6" class="text-right">
+                <abp-button id="CreateNew"
+                            text="@L["AddNew"].Value"
+                            icon="plus"
+                            button-type="Primary" />
+            </abp-column>
+        </abp-row>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="false" id="main_table--page"></abp-table>
+    </abp-card-body>
+</abp-card>

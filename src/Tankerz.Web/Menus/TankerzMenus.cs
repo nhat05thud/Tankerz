@@ -11,6 +11,7 @@
         public const string Product = Prefix + ".Product";
         public const string ProductCategory = Prefix + ".ProductCategory";
         public const string ProductGroup = Prefix + ".ProductGroup";
+        public const string ProductAttribute = Prefix + ".ProductAttribute";
 
         public const string AdminManagement = Prefix + ".AdminManagement";
         // 
