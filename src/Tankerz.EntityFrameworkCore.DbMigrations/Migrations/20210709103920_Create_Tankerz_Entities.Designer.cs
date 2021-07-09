@@ -11,7 +11,7 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Tankerz.Migrations
 {
     [DbContext(typeof(TankerzMigrationsDbContext))]
-    [Migration("20210707031718_Create_Tankerz_Entities")]
+    [Migration("20210709103920_Create_Tankerz_Entities")]
     partial class Create_Tankerz_Entities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -293,7 +293,10 @@ namespace Tankerz.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("ProductAttributeId")
+                    b.Property<int>("ProductAttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
@@ -302,6 +305,8 @@ namespace Tankerz.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductAttributeId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("AppProductAttributeOptions");
                 });
@@ -361,12 +366,7 @@ namespace Tankerz.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("AppProductAttributes");
                 });
@@ -585,6 +585,74 @@ namespace Tankerz.Migrations
                     b.ToTable("AppProductGroups");
                 });
 
+            modelBuilder.Entity("Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions.ProductWithMultipleAttributeOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("ProductAttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductAttributeOptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductAttributeOptionId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("AppProductWithMultipleAttributeOptions");
+                });
+
             modelBuilder.Entity("Tankerz.TankerzEntities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -679,11 +747,11 @@ namespace Tankerz.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<decimal>("OldPrice")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("OldPrice")
+                        .HasColumnType("real");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
 
                     b.Property<int>("ProductCategoryId")
                         .HasColumnType("int");
@@ -2856,16 +2924,15 @@ namespace Tankerz.Migrations
                 {
                     b.HasOne("Tankerz.TankerzEntities.ProductAttributes.ProductAttribute", "ProductAttribute")
                         .WithMany("ProductAttributeOptions")
-                        .HasForeignKey("ProductAttributeId");
+                        .HasForeignKey("ProductAttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tankerz.TankerzEntities.Products.Product", null)
+                        .WithMany("ProductAttributeOptions")
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("ProductAttribute");
-                });
-
-            modelBuilder.Entity("Tankerz.TankerzEntities.ProductAttributes.ProductAttribute", b =>
-                {
-                    b.HasOne("Tankerz.TankerzEntities.Products.Product", null)
-                        .WithMany("ProductAttributes")
-                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Tankerz.TankerzEntities.ProductCategories.ProductCategory", b =>
@@ -2881,6 +2948,25 @@ namespace Tankerz.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductGroup");
+                });
+
+            modelBuilder.Entity("Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions.ProductWithMultipleAttributeOption", b =>
+                {
+                    b.HasOne("Tankerz.TankerzEntities.ProductAttributeOptions.ProductAttributeOption", "ProductAttributeOption")
+                        .WithMany("ProductWithMultipleAttributeOptions")
+                        .HasForeignKey("ProductAttributeOptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tankerz.TankerzEntities.Products.Product", "Product")
+                        .WithMany("ProductWithMultipleAttributeOptions")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductAttributeOption");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
@@ -3165,6 +3251,11 @@ namespace Tankerz.Migrations
                     b.Navigation("Blogs");
                 });
 
+            modelBuilder.Entity("Tankerz.TankerzEntities.ProductAttributeOptions.ProductAttributeOption", b =>
+                {
+                    b.Navigation("ProductWithMultipleAttributeOptions");
+                });
+
             modelBuilder.Entity("Tankerz.TankerzEntities.ProductAttributes.ProductAttribute", b =>
                 {
                     b.Navigation("ProductAttributeOptions");
@@ -3182,7 +3273,9 @@ namespace Tankerz.Migrations
 
             modelBuilder.Entity("Tankerz.TankerzEntities.Products.Product", b =>
                 {
-                    b.Navigation("ProductAttributes");
+                    b.Navigation("ProductAttributeOptions");
+
+                    b.Navigation("ProductWithMultipleAttributeOptions");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

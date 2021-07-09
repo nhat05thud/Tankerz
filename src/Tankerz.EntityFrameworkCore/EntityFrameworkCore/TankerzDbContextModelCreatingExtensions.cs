@@ -6,6 +6,7 @@ using Tankerz.TankerzEntities.ProductAttributes;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
 using Tankerz.TankerzEntities.Products;
+using Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions;
 using Tankerz.TankerzEntities.TankerzFiles;
 using Tankerz.TankerzEntities.TankerzFolders;
 using Tankerz.TankerzEntities.TankerzPages;
@@ -75,8 +76,8 @@ namespace Tankerz.EntityFrameworkCore
                           TankerzConsts.DbSchema);
                 b.ConfigureByConvention();
                 b.Property(x => x.Name).IsRequired().HasMaxLength(256);
-                b.Property(x => x.Price).HasColumnType("decimal(18,2)");
-                b.Property(x => x.OldPrice).HasColumnType("decimal(18,2)");
+                //b.Property(x => x.Price).HasColumnType("decimal(18,2)");
+                //b.Property(x => x.OldPrice).HasColumnType("decimal(18,2)");
             });
             builder.Entity<ProductCategory>(b =>
             {
@@ -106,6 +107,13 @@ namespace Tankerz.EntityFrameworkCore
                           TankerzConsts.DbSchema);
                 b.ConfigureByConvention();
                 b.Property(x => x.Name).IsRequired().HasMaxLength(256);
+            });
+
+            builder.Entity<ProductWithMultipleAttributeOption>(b =>
+            {
+                b.ToTable(TankerzConsts.DbTablePrefix + "ProductWithMultipleAttributeOptions",
+                          TankerzConsts.DbSchema);
+                b.ConfigureByConvention();
             });
         }
     }

@@ -7,6 +7,7 @@
     "Menu:ProductCategory": "Danh mục sản phẩm",
     "Menu:ProductGroup": "Nhóm sản phẩm",
     "Menu:AdminManagement": "Quản lý Menu",
+    "Menu:ProductAttribute": "Thuộc tính sản phẩm",
     "Welcome": "Chào mừng bạn",
     "LongWelcomeMessage": "Chào mừng bạn đến ứng dụng. Đây là một dự án khởi nghiệp dựa trên khung ABP. Để biết thêm thông tin, hãy truy cập abp.io.",
     "AddNew": "Thêm mới",
@@ -30,6 +31,14 @@
     "ProductCategory": "Danh mục sản phẩm",
     "ProductGroup": "Nhóm sản phẩm",
     "Product": "Sản phẩm",
+    "AddProduct": "Thêm mới sản phẩm",
+    "EditProduct": "Sửa sản phẩm",
+    "ProductAttribute": "Thuộc tính sản phẩm",
+    "AddProductAttribute": "Thêm thuộc tính sản phẩm",
+    "ProductAttributeName": "Tên thuộc tính",
+    "ProductAttributeOptionName": "Tên option",
+    "Value": "Giá trị",
+    "ProductAttributeOption": "Các phần phần thuộc tính sản phẩm",
     "Page404Description": "Xin lỗi, không thể tìm thấy trang này.",
     "GoBackToHomePage": "Trở về trang chủ"
   }

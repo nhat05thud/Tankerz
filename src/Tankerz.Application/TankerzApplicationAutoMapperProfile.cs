@@ -1,14 +1,20 @@
 ﻿using AutoMapper;
 using Tankerz.BlogCategories;
 using Tankerz.Blogs;
+using Tankerz.ProductAttributeOptions;
+using Tankerz.ProductAttributes;
 using Tankerz.ProductCategories;
 using Tankerz.ProductGroups;
 using Tankerz.Products;
+using Tankerz.ProductWithMultipleAttributeOptions;
 using Tankerz.TankerzEntities.BlogCategories;
 using Tankerz.TankerzEntities.Blogs;
+using Tankerz.TankerzEntities.ProductAttributeOptions;
+using Tankerz.TankerzEntities.ProductAttributes;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
 using Tankerz.TankerzEntities.Products;
+using Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions;
 
 namespace Tankerz
 {
@@ -38,10 +44,24 @@ namespace Tankerz
             CreateMap<CreateUpdateProductCategoryDto, ProductCategory>();
             CreateMap<ProductGroup, ProductGroupLookupDto>();
             
-            // product categories
+            // product
             CreateMap<Product, ProductDto>();
             CreateMap<CreateUpdateProductDto, Product>();
             CreateMap<ProductCategory, ProductCategoryLookupDto>();
+            
+            // product attribute
+            CreateMap<ProductAttribute, ProductAttributeDto>();
+            CreateMap<CreateUpdateProductAttributeDto, ProductAttribute>();
+
+            // product attribute options
+            CreateMap<ProductAttributeOption, ProductAttributeOptionDto>();
+            CreateMap<CreateUpdateProductAttributeOptionDto, ProductAttributeOption>();
+            
+            // product multiple attribute options
+            CreateMap<ProductWithMultipleAttributeOption, ProductWithMultipleAttributeOptionDto>();
+            CreateMap<CreateUpdateProductWithMultipleAttributeOptionDto, ProductWithMultipleAttributeOption>();
+            CreateMap<ProductAttribute, ProductAttributeLookDto>();
+            CreateMap<ProductAttributeOption, ProductAttributeLookDto>();
 
         }
     }

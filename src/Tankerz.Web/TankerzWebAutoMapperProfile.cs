@@ -1,19 +1,28 @@
 ﻿using AutoMapper;
 using Tankerz.BlogCategories;
 using Tankerz.Blogs;
+using Tankerz.ProductAttributeOptions;
+using Tankerz.ProductAttributes;
 using Tankerz.ProductCategories;
 using Tankerz.ProductGroups;
 using Tankerz.Products;
+using Tankerz.ProductWithMultipleAttributeOptions;
 using static Tankerz.Web.Pages.BlogCategories.CreateModalModel;
 using static Tankerz.Web.Pages.BlogCategories.EditModalModel;
-using static Tankerz.Web.Pages.Blogs.CreateModalModel;
-using static Tankerz.Web.Pages.Blogs.EditModalModel;
+using static Tankerz.Web.Pages.Blogs.CreateModel;
+using static Tankerz.Web.Pages.Blogs.EditModel;
+using static Tankerz.Web.Pages.ProductAttributes.CreateModel;
+using static Tankerz.Web.Pages.ProductAttributes.EditModel;
+using static Tankerz.Web.Pages.ProductAttributes.Options.CreateModalModel;
+using static Tankerz.Web.Pages.ProductAttributes.Options.EditModalModel;
 using static Tankerz.Web.Pages.ProductCategories.CreateModalModel;
 using static Tankerz.Web.Pages.ProductCategories.EditModalModel;
 using static Tankerz.Web.Pages.ProductGroups.CreateModalModel;
 using static Tankerz.Web.Pages.ProductGroups.EditModalModel;
-using static Tankerz.Web.Pages.Products.CreateModalModel;
-using static Tankerz.Web.Pages.Products.EditModalModel;
+using static Tankerz.Web.Pages.Products.Attributes.CreateModalModel;
+using static Tankerz.Web.Pages.Products.Attributes.EditModalModel;
+using static Tankerz.Web.Pages.Products.CreateModel;
+using static Tankerz.Web.Pages.Products.EditModel;
 
 namespace Tankerz.Web
 {
@@ -46,11 +55,30 @@ namespace Tankerz.Web
             CreateMap<CreateProductCategoryViewModel, CreateUpdateProductCategoryDto>();
             CreateMap<EditProductCategoryViewModel, CreateUpdateProductCategoryDto>();
 
-            // product category
+            // product
             CreateMap<ProductDto, CreateProductViewModel>();
             CreateMap<ProductDto, EditProductViewModel>();
             CreateMap<CreateProductViewModel, CreateUpdateProductDto>();
             CreateMap<EditProductViewModel, CreateUpdateProductDto>();
+
+            // productAttribute
+            CreateMap<ProductAttributeDto, CreateProductAttributeViewModel>();
+            CreateMap<ProductAttributeDto, EditProductAttributeViewModel>();
+            CreateMap<CreateProductAttributeViewModel, CreateUpdateProductAttributeDto>();
+            CreateMap<EditProductAttributeViewModel, CreateUpdateProductAttributeDto>();
+            
+            // productAttributeOptions
+            CreateMap<ProductAttributeOptionDto, CreateProductAttributeOptionViewModel>();
+            CreateMap<ProductAttributeOptionDto, EditProductAttributeOptionViewModel>();
+            CreateMap<CreateProductAttributeOptionViewModel, CreateUpdateProductAttributeOptionDto>();
+            CreateMap<EditProductAttributeOptionViewModel, CreateUpdateProductAttributeOptionDto>();
+
+            // ProductWithMultipleAttributeOption
+            CreateMap<ProductWithMultipleAttributeOptionDto, CreateProductMultipleAttributeOptionViewModel>();
+            CreateMap<ProductWithMultipleAttributeOptionDto, EditProductMultipleAttributeOptionViewModel>();
+            CreateMap<CreateProductMultipleAttributeOptionViewModel, CreateUpdateProductWithMultipleAttributeOptionDto>();
+            CreateMap<EditProductMultipleAttributeOptionViewModel, CreateUpdateProductWithMultipleAttributeOptionDto>();
+
         }
     }
 }

@@ -45,6 +45,29 @@ namespace Tankerz.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppProductAttributes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppProductAttributes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AppProductGroups",
                 columns: table => new
                 {
@@ -90,8 +113,8 @@ namespace Tankerz.Migrations
                     Banners = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ListImages = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OldPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    OldPrice = table.Column<float>(type: "real", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -305,36 +328,6 @@ namespace Tankerz.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppProductAttributes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: true),
-                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppProductAttributes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AppProductAttributes_AppProducts_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "AppProducts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AppProductAttributeOptions",
                 columns: table => new
                 {
@@ -343,7 +336,8 @@ namespace Tankerz.Migrations
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
-                    ProductAttributeId = table.Column<int>(type: "int", nullable: true),
+                    ProductAttributeId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
                     ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -362,7 +356,50 @@ namespace Tankerz.Migrations
                         column: x => x.ProductAttributeId,
                         principalTable: "AppProductAttributes",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppProductAttributeOptions_AppProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "AppProducts",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppProductWithMultipleAttributeOptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductAttributeId = table.Column<int>(type: "int", nullable: false),
+                    ProductAttributeOptionId = table.Column<int>(type: "int", nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    ExtraProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppProductWithMultipleAttributeOptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppProductWithMultipleAttributeOptions_AppProductAttributeOptions_ProductAttributeOptionId",
+                        column: x => x.ProductAttributeOptionId,
+                        principalTable: "AppProductAttributeOptions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppProductWithMultipleAttributeOptions_AppProducts_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "AppProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -376,8 +413,8 @@ namespace Tankerz.Migrations
                 column: "ProductAttributeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppProductAttributes_ProductId",
-                table: "AppProductAttributes",
+                name: "IX_AppProductAttributeOptions_ProductId",
+                table: "AppProductAttributeOptions",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
@@ -389,6 +426,16 @@ namespace Tankerz.Migrations
                 name: "IX_AppProductCategories_ProductGroupId",
                 table: "AppProductCategories",
                 column: "ProductGroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppProductWithMultipleAttributeOptions_ProductAttributeOptionId",
+                table: "AppProductWithMultipleAttributeOptions",
+                column: "ProductAttributeOptionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppProductWithMultipleAttributeOptions_ProductId",
+                table: "AppProductWithMultipleAttributeOptions",
+                column: "ProductId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -397,10 +444,10 @@ namespace Tankerz.Migrations
                 name: "AppBlogs");
 
             migrationBuilder.DropTable(
-                name: "AppProductAttributeOptions");
+                name: "AppProductCategories");
 
             migrationBuilder.DropTable(
-                name: "AppProductCategories");
+                name: "AppProductWithMultipleAttributeOptions");
 
             migrationBuilder.DropTable(
                 name: "AppTankerzFiles");
@@ -415,10 +462,13 @@ namespace Tankerz.Migrations
                 name: "AppBlogCategories");
 
             migrationBuilder.DropTable(
-                name: "AppProductAttributes");
+                name: "AppProductGroups");
 
             migrationBuilder.DropTable(
-                name: "AppProductGroups");
+                name: "AppProductAttributeOptions");
+
+            migrationBuilder.DropTable(
+                name: "AppProductAttributes");
 
             migrationBuilder.DropTable(
                 name: "AppProducts");

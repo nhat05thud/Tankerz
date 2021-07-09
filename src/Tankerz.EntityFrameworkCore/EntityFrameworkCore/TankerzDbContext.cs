@@ -6,6 +6,7 @@ using Tankerz.TankerzEntities.ProductAttributes;
 using Tankerz.TankerzEntities.ProductCategories;
 using Tankerz.TankerzEntities.ProductGroups;
 using Tankerz.TankerzEntities.Products;
+using Tankerz.TankerzEntities.ProductWithMultipleAttributeOptions;
 using Tankerz.TankerzEntities.TankerzFiles;
 using Tankerz.TankerzEntities.TankerzFolders;
 using Tankerz.TankerzEntities.TankerzPages;
@@ -41,6 +42,7 @@ namespace Tankerz.EntityFrameworkCore
         public DbSet<ProductGroup> ProductGroups { get; set; }
         public DbSet<ProductAttribute> ProductAttributes { get; set; }
         public DbSet<ProductAttributeOption> ProductAttributeOptions { get; set; }
+        public DbSet<ProductWithMultipleAttributeOption> ProductWithMultipleAttributeOptions { get; set; }
 
 
 
